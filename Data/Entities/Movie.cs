@@ -33,5 +33,7 @@ namespace Data.Entities
 
 
         public ICollection<Review> Reviews { get; set; }
+
+        public ICollection<Genre> Genres { get; set; }
     }
 }
