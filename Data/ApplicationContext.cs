@@ -42,6 +42,8 @@ namespace Data
             .HasIndex(s => new { s.MovieId, s.UserId }).IsUnique();
             builder.Entity<Country>()
             .HasIndex(s => s.Name).IsUnique();
+            builder.Entity<Genre>()
+            .HasIndex(s => s.Name).IsUnique();
         }
     }
 }
