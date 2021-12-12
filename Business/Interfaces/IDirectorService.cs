@@ -12,5 +12,7 @@ namespace Business.Interfaces
         Task AddMovieToDirectorAsync(DirectorModel model, string userId);
 
         Task DeleteMovieFromDirectorAsync(int directorId, string userId);
+
+        Task<IEnumerable<DirectorModel>> GetMovieDirectorsAsync(int movieId);
     }
 }

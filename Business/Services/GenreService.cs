@@ -126,6 +126,24 @@ namespace Business.Services
                 .SingleOrDefaultAsync(v => v.Id == id));
         }
 
+        public async Task<IEnumerable<GenreModel>> GetMovieGenresAsync(int movieId)
+        {
+            return await Task.Run(() => _mapper.Map<IEnumerable<GenreModel>>(
+                _context.Genres
+                .Include(g => g.Movies)
+                .Include(g => g.Users)
+                .Where(r => r.Movies.Select(m => m.Id).Contains(movieId))));
+        }
+
+        public async Task<IEnumerable<GenreModel>> GetUserGenresAsync(string userId)
+        {
+            return await Task.Run(() => _mapper.Map<IEnumerable<GenreModel>>(
+                _context.Genres
+                .Include(g => g.Movies)
+                .Include(g => g.Users)
+                .Where(r => r.Users.Select(m => m.Id).Contains(userId))));
+        }
+
         public async Task UpdateAsync(GenreModel model)
         {
             if (model is null)

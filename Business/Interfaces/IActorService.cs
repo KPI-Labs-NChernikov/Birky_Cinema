@@ -13,5 +13,7 @@ namespace Business.Interfaces
         Task AddMovieToActorAsync(ActorModel model, string userId);
 
         Task DeleteMovieFromActorAsync(int genreId, string userId);
+
+        Task<IEnumerable<ActorModel>> GetMovieActorsAsync(int movieId);
     }
 }

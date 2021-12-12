@@ -17,5 +17,9 @@ namespace Business.Interfaces
         Task DeleteUserFromGenreAsync(int genreId, string userId);
 
         Task DeleteMovieFromGenreAsync(int genreId, int movieId);
+
+        Task<IEnumerable<GenreModel>> GetMovieGenresAsync(int movieId);
+
+        Task<IEnumerable<GenreModel>> GetUserGenresAsync(string userId);
     }
 }

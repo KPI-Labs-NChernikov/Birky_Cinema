@@ -9,5 +9,6 @@ namespace Business.Interfaces
 {
     public interface IReviewService : ICRUD<ReviewModel>
     {
+        Task<IEnumerable<ReviewModel>> GetMovieReviewsAsync(int movieId);
     }
 }

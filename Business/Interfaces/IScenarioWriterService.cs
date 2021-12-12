@@ -12,5 +12,7 @@ namespace Business.Interfaces
         Task AddMovieToScenarioWriterAsync(ScenarioWriterModel model, string userId);
 
         Task DeleteMovieFromScenarioWriterAsync(int writerId, string userId);
+
+        Task<IEnumerable<ScenarioWriterModel>> GetMovieScenarioWritersAsync(int movieId);
     }
 }
