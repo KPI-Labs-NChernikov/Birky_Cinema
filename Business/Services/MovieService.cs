@@ -35,7 +35,7 @@ namespace Business.Services
 
         public IEnumerable<MovieModel> GetAll()
         {
-            return _mapper.Map<IEnumerable<MovieModel>>(_context.Movies);
+            return _mapper.Map<IEnumerable<MovieModel>>(_context.Movies.OrderByDescending(m => m.Id));
         }
 
         public async Task<MovieModel> GetByIdAsync(int id)
@@ -51,9 +51,33 @@ namespace Business.Services
             return _mapper.Map<MovieModel>(model);
         }
 
+        public async Task<IEnumerable<MovieModel>> GetRecommendedAsync(string userId)
+        {
+            var user = await _context.Users.Include(u => u.Genres).SingleOrDefaultAsync(u => u.Id == userId);
+            if (user is null)
+                return new List<MovieModel>();
+            return await Task.Run(() => _mapper.Map<IEnumerable<MovieModel>>(_context.Movies
+                .Include(m => m.Genres)
+                .Where(m => m.Genres.Intersect(user.Genres).Any())
+                .OrderByDescending(m => m.Id)));
+        }
+
         public async Task<IEnumerable<MovieModel>> GetShortsAsync()
         {
-            return await Task.Run(() => _mapper.Map<IEnumerable<MovieModel>>(_context.Movies.Where(m => m.Length < 52)));
+            return await Task.Run(() => _mapper.Map<IEnumerable<MovieModel>>(_context.Movies
+                .Where(m => m.Length < 52)
+                .OrderByDescending(m => m.Id)));
+        }
+
+        public async Task<IEnumerable<MovieModel>> GetSimilarAsync(int movieId)
+        {
+            var movie = await _context.Movies.Include(m => m.Genres).SingleOrDefaultAsync(m => m.Id == movieId);
+            if (movie is null)
+                return new List<MovieModel>();
+            return await Task.Run(() => _mapper.Map<IEnumerable<MovieModel>>(_context.Movies
+                .Include(m => m.Genres)
+                .Where(m => m.Genres.Intersect(movie.Genres).Any())
+                .OrderByDescending(m => m.Id)));
         }
 
         public Task UpdateAsync(MovieModel model)

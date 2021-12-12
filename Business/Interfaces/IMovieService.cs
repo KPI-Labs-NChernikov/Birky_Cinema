@@ -10,5 +10,9 @@ namespace Business.Interfaces
     public interface IMovieService : ICRUD<MovieModel>
     {
         Task<IEnumerable<MovieModel>> GetShortsAsync();
+
+        Task<IEnumerable<MovieModel>> GetRecommendedAsync(string userId);
+
+        Task<IEnumerable<MovieModel>> GetSimilarAsync(int movieId);
     }
 }
