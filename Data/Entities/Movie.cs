@@ -35,5 +35,15 @@ namespace Data.Entities
         public ICollection<Review> Reviews { get; set; }
 
         public ICollection<Genre> Genres { get; set; }
+
+        public ICollection<Director> Directors { get; set; }
+
+        public ICollection<Actor> Actors { get; set; }
+
+        public ICollection<ScenarioWriter> ScenarioWriters { get; set; }
+
+        public ICollection<User> Users { get; set; }
+
+        public ICollection<Session> Sessions { get; set; }
     }
 }
