@@ -85,14 +85,32 @@ namespace Business.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteMovieFromGenreAsync(int genreId, int movieId)
+        public async Task DeleteMovieFromGenreAsync(int genreId, int movieId)
         {
-            throw new NotImplementedException();
+            var model = await _context.Genres
+                .Include(g => g.Movies)
+                .SingleOrDefaultAsync(v => v.Id == genreId);
+            if (model is null)
+                throw new InvalidOperationException("Model with such an id was not found");
+            var movie = await _context.Movies.FindAsync(movieId);
+            if (movie is null)
+                throw new InvalidOperationException("Movie with such an id was not found");
+            model.Movies.Remove(movie);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteUserFromGenreAsync(int genreId, string userId)
+        public async Task DeleteUserFromGenreAsync(int genreId, string userId)
         {
-            throw new NotImplementedException();
+            var model = await _context.Genres
+                .Include(g => g.Movies)
+                .SingleOrDefaultAsync(v => v.Id == genreId);
+            if (model is null)
+                throw new InvalidOperationException("Model with such an id was not found");
+            var user = await _context.Users.FindAsync(userId);
+            if (user is null)
+                throw new InvalidOperationException("User with such an id was not found");
+            model.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
 
         public IEnumerable<GenreModel> GetAll()
