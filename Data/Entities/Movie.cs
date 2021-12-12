@@ -14,9 +14,19 @@ namespace Data.Entities
         [Column(TypeName = "nvarchar(150)")]
         public string Name { get; set; }
 
+        [Column(TypeName = "nvarchar(150)")]
+        public string NameRU { get; set; }
+
+        [Column(TypeName = "nvarchar(150)")]
+        public string NameENG { get; set; }
+
         public short AgeRestriction { get; set; }
 
         public string Description { get; set; }
+
+        public string DescriptionRU { get; set; }
+
+        public string DescriptionENG { get; set; }
 
         public short Length { get; set; }
 

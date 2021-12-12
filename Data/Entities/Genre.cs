@@ -14,6 +14,12 @@ namespace Data.Entities
         [Column(TypeName = "nvarchar(150)")]
         public string Name { get; set; }
 
+        [Column(TypeName = "nvarchar(150)")]
+        public string NameRU { get; set; }
+
+        [Column(TypeName = "nvarchar(150)")]
+        public string NameENG { get; set; }
+
         public ICollection<Movie> Movies { get; set; }
 
         public ICollection<User> Users { get; set; }

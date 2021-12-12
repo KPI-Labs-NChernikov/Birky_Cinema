@@ -17,6 +17,18 @@ namespace Data.Entities
 		[Column(TypeName = "nvarchar(50)")]
 		public string LastName { get; set; }
 
+		[Column(TypeName = "nvarchar(50)")]
+		public string FirstNameRU { get; set; }
+
+		[Column(TypeName = "nvarchar(50)")]
+		public string LastNameRU { get; set; }
+
+		[Column(TypeName = "nvarchar(50)")]
+		public string FirstNameENG { get; set; }
+
+		[Column(TypeName = "nvarchar(50)")]
+		public string LastNameENG { get; set; }
+
 		public ICollection<Movie> Movies { get; set; }
 	}
 }
