@@ -13,5 +13,8 @@ namespace Data.Entities
 
         [Column(TypeName = "nvarchar(50)")]
         public string LastName { get; set; }
+
+
+        public ICollection<Review> Reviews { get; set; }
     }
 }
