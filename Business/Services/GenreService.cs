@@ -85,6 +85,16 @@ namespace Business.Services
             await _context.SaveChangesAsync();
         }
 
+        public Task DeleteMovieFromGenreAsync(int genreId, int movieId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteUserFromGenreAsync(int genreId, string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<GenreModel> GetAll()
         {
             return _mapper.Map<IEnumerable<GenreModel>>(_context.Genres.Include(g => g.Movies).Include(g => g.Users));

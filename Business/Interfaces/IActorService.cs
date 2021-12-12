@@ -10,6 +10,8 @@ namespace Business.Interfaces
 {
     public interface IActorService : ICRUD<ActorModel>
     {
-        Task AddMovieToActorAsync(ActorModel genre, string userId);
+        Task AddMovieToActorAsync(ActorModel model, string userId);
+
+        Task DeleteMovieFromActorAsync(int genreId, string userId);
     }
 }

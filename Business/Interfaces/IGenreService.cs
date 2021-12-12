@@ -10,8 +10,12 @@ namespace Business.Interfaces
 {
     public interface IGenreService : ICRUD<GenreModel>
     {
-        Task AddUserToGenreAsync(GenreModel genre, string userId);
+        Task AddUserToGenreAsync(GenreModel model, string userId);
 
-        Task AddMovieToGenreAsync(GenreModel genre, int movieId);
+        Task AddMovieToGenreAsync(GenreModel model, int movieId);
+
+        Task DeleteUserFromGenreAsync(int genreId, string userId);
+
+        Task DeleteMovieFromGenreAsync(int genreId, int movieId);
     }
 }
