@@ -18,13 +18,17 @@ namespace Presentation.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(string lang)
         {
+            ViewBag.Lang = (lang is null) ? "ukr" : lang;
             return View();
         }
 
-        public IActionResult Privacy()
+        [Route("{controller}/InDevelopment")]
+        public IActionResult InDevelopment(string lang)
         {
+            ViewBag.Lang = (lang is null) ? "ukr" : lang;
             return View();
         }
 

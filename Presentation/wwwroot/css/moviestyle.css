@@ -1,0 +1,521 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+.poster-image {
+    position: relative;
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+}
+
+.poster-fade {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 1) 80%, #151515 100%);
+    width: 100%;
+    z-index: -1;
+    overflow-y: visible;
+    display: flex;
+    flex-direction: row;
+    gap: 6%;
+    padding: 140px 7%;
+    padding-bottom: 100px;
+}
+
+.affiche-main {
+    width: 22%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.affiche-main img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: center center;
+    z-index: 0;
+}
+
+.movie-description {
+    z-index: 0;
+    padding-top: 2em;
+    width: 50%;
+    text-align: justify;
+}
+
+.age-restriction {
+    color: #fff;
+}
+
+.movie-description h2 {
+    color: #FFDD2F;
+    font-size: 32pt;
+    font-weight: 800;
+}
+
+.movie-description p {
+    color: #fff;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.filmrate-table {
+    color: #fff;
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+}
+
+.filmrate-table td {
+    vertical-align: top;
+}
+
+.filmrate-left {
+    color: #CCCCCC;
+    width: 40%;
+    padding-right: 50px;
+}
+
+@media (max-width: 650px) {
+    .poster-fade {
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .movie-description {
+        width: 80%;
+        text-align: justify;
+    }
+
+    .affiche-main {
+        width: 300px;
+        height: 400px;
+        overflow: hidden;
+        z-index: 0;
+    }
+
+    .movie-description h2 {
+        font-size: 24pt;
+    }
+    
+    .movie-description p {
+        font-size: 12pt;
+    }
+
+    .filmrate-table {
+        font-size: 10pt;
+        width: 100%;
+    }
+
+    .filmrate-left {
+        width: 50%;
+    }
+
+    .filmrate-star {
+        width: 22px;
+    }
+}
+
+@media (min-width: 1801px) {
+    .affiche-main {
+        width: 450px;
+        height: 600px;
+        overflow: hidden;
+        z-index: 0;
+    }
+}
+
+.session-timetable {
+    margin-left: 56px;
+    margin-right: 56px;
+    margin-bottom: 56px;
+}
+
+.session-timetable h2 {
+    color: #FFDD2F;
+    font-weight: 800;
+    font-size: 26pt;
+}
+
+.timetable {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    flex-wrap: wrap;
+}
+
+.tt-row {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 80px;
+}
+
+.tt-times {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.timetable button {
+    display: block;
+    width: 115px;
+    height: 53px;
+    background: #1D1D1D;
+    box-shadow: -5px -5px 10px rgba(143, 143, 143, 0.2), 5px 5px 10px rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    border-color: #1D1D1D;
+    font-weight: 800;
+    font-size: 16pt;
+    line-height: 30px;
+    letter-spacing: 0.01em;
+    color: #FFDD2F;
+    cursor: pointer;
+}
+
+.timetable button:active {
+    box-shadow: inset 0px 5px 7px rgba(0, 0, 0, 0.78), inset 0px -5px 7px rgba(117, 117, 117, 0.25);
+}
+
+.tt-date {
+    width: 236px;
+    height: 70px;
+    background: #1D1D1D;
+    box-shadow: inset 0px 5px 7px rgba(0, 0, 0, 0.78), inset 0px -5px 7px rgba(117, 117, 117, 0.25);
+    border-radius: 15px;
+    font-weight: 800;
+    font-size: 20pt;
+    letter-spacing: 0.01em;
+    color: #CCCCCC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 650px) {
+    .session-timetable {
+        margin-left: 26px;
+        margin-right: 26px;
+    }
+
+    .session-timetable h2 {
+        font-size: 22pt;
+        text-align: center;
+    }
+
+    .tt-row {
+        gap: 40px;
+    }
+
+    .timetable button {
+        width: 110px;
+        height: 50px;
+    }
+
+    .timetable {
+        justify-content: center;
+    }
+
+    .tt-row {
+        justify-content: center;
+    }
+
+    .tt-times {
+        justify-content: center;
+    }
+}
+
+.reviews-container {
+    width: 100%;
+    background-color: #333333;
+    padding-bottom: 60px;
+}
+
+.reviews {
+    margin-left: 56px;
+    padding-right: 56px;
+}
+
+.reviews h2 {
+    color: #FFDD2F;
+    font-weight: 800;
+    font-size: 26pt;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+}
+
+.user-avatar img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: center center;
+}
+
+.existing-reviews {
+    margin-top: 20px;
+    margin-left: 25px;
+    padding-right: 25px;
+}
+
+.reviews h3 {
+    display: inline-block;
+    font-size: 18pt;
+    font-weight: 400;
+    color: #FFF;
+}
+
+.review-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.review-star {
+    width: 20px;
+}
+
+.review-rating {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.review-userinfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.review-text {
+    margin-left: calc(48px + 10px);
+}
+
+.review-text p {
+    color: #CCCCCC;
+    font-size: 16pt;
+    text-transform: none;
+    font-weight: 500;
+}
+
+.existing-reviews {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.add-review {
+    background: #3D3D3D;
+    border: 3px solid #7B7A7A;
+}
+
+.upper-add-review {
+    width: 100%;
+    height: 80%;
+    background: #4E4E4E;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.megaphone {
+    margin-left: 35px;
+}
+
+#new-review-text {
+    resize: none;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none !important;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14pt;
+    font-weight: bold;
+    color: #CCCCCC;
+    min-height: 3.5em;
+    margin-right: 20px;
+}
+
+.rating-area {
+	overflow: hidden;
+    margin-left: 35px;
+}
+.rating-area:not(:checked) > input {
+    position: absolute;
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
+.rating-area:not(:checked) > label {
+	float: right;
+	width: 24px;
+    height: 24px;
+	padding: 0;
+	cursor: pointer;
+	font-size: 32px;
+	line-height: 32px;
+    margin-right: 5px;
+	background-image: url("icons/greystar.svg");
+    background-size: cover;
+}
+.rating-area:not(:checked) > label:before {
+	background-image: url("icons/greystar.svg");
+}
+.rating-area > input:checked ~ label {
+	background-image: url("icons/yellowstar.svg");
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+	background-image: url("icons/yellowstar.svg");
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+	background-image: url("icons/yellowstar.svg");
+}
+.rate-area > label:active {
+	position: relative;
+}
+
+.lower-add-review {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#send-review-btn {
+    cursor: pointer;
+    width: 150px;
+    height: 40px;
+    background: #FFDD2F;
+    border-color: #FFDD2F;
+    outline: none !important;
+    border-style: solid;
+    border-radius: 12px;
+    font-size: 14pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: 30px;
+    transition: 0.2s linear;
+}
+
+#send-review-btn:hover {
+    background: black;
+    border-color: black;
+    color: #FFDD2F;
+}
+
+#send-review-btn:active {
+    border-style: solid;
+    background: black !important;
+    border-color: black !important;
+    color: #FFDD2F !important;
+}
+
+@media (max-width: 650px) {
+    #send-review-btn:hover {
+        background: #FFDD2F;
+        border-color: #FFDD2F;
+        color: black;
+    }
+
+    .lower-add-review {
+        height: 90px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .rating-area {
+        margin-left: 0;
+    }
+
+    #send-review-btn {
+        margin-right: 0;
+    }
+
+    .megaphone {
+        margin-left: 15px;
+    }
+
+    #new-review-text {
+        font-size: 12pt;
+        min-height: 4.5em;
+    }
+
+    .reviews h2 {
+        font-size: 22pt;
+        text-align: center;
+    }
+
+    .reviews h3 {
+        font-size: 12pt;
+    }
+
+    .review-text {
+        margin-top: 10px;
+        margin-left: calc(36px + 10px);
+    }
+
+    .review-text p {
+        font-size: 12pt;
+    }
+
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+    }
+
+    .existing-reviews {
+        margin-top: 20px;
+        margin-left: 0;
+        padding-right: 0;
+    }
+
+    .reviews {
+        margin-left: 26px;
+        padding-right: 26px;
+    }
+}
+
+.movies h2 {
+    text-align: left;
+    margin-left: 56px;
+    margin-right: 56px;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.movies {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 650px) {
+    .movies h2 {
+        text-align: center;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

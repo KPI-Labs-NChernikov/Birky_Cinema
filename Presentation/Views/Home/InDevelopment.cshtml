@@ -1,0 +1,12 @@
+﻿@{
+    var title = "В розробці";
+    if (ViewBag.Lang == "eng")
+        title = "In development";
+    else if (ViewBag.Lang == "ru")
+        title = "В разработке";
+    ViewData["Title"] = title;
+}
+
+<div class="under-construction">
+    <h2>@title...</h2>
+</div>

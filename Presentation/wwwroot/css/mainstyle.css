@@ -1,0 +1,231 @@
+main {
+    min-height: 500px;
+}
+
+.posters {
+    position: relative;
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.poster {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    display: none;
+}
+
+.poster.active {
+    display: flex;
+}
+
+#poster-1 {
+    background-image: url("movies/breaking-bad-2008/poster.png");
+}
+
+#poster-2 {
+    background-image: url("movies/dark-waters-2009/poster.webp");
+}
+
+#poster-3 {
+    background-image: url("movies/the-big-short-2016/poster.jpg");
+}
+
+#poster-4 {
+    background-image: url("movies/revolutionary-road-2008/poster.jpg");
+}
+
+#poster-5 {
+    background-image: url("movies/the-children-act-2017/poster.jpg");
+}
+
+.poster-info {
+    width: 100vw;
+    min-height: 35%;
+    margin-top: 32.5%;
+    background-color: rgba(0, 0, 0, 0.55);
+    overflow:hidden;
+}
+
+.poster-info-text {
+    width: 92%;
+    height: 100%;
+    color: #fff;
+    margin: 60px 4%;
+    text-overflow: ellipsis;
+}
+
+.poster-info-text h2 {
+    font-size: 32pt;
+}
+
+.poster-info-text p {
+    font-size: 17pt;
+    font-weight: bold;
+    text-align: justify;
+}
+
+.poster a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    transition: 0.25s linear;
+}
+
+.poster a:hover {
+    text-shadow: 0 0 40px #fff;
+}
+
+@media (max-width: 1200px) {
+    .poster-info {
+        margin-top: 47.5%;
+    }
+}
+
+@media (max-width: 650px) {
+    .poster {
+        padding-top: 25px;
+    }
+
+    #poster-1 {
+        background-image: url("movies/breaking-bad-2008/affiche.jpg");
+    }
+
+    #poster-2 {
+        background-image: url("movies/dark-waters-2009/affiche.jpg");
+    }
+    
+    #poster-3 {
+        background-image: url("movies/the-big-short-2016/affiche.jpg");
+    }
+    
+    #poster-4 {
+        background-image: url("movies/revolutionary-road-2008/affiche.jpg");
+    }
+    
+    #poster-5 {
+        background-image: url("movies/the-children-act-2017/affiche.jpg");
+    }
+
+    .poster-info {
+        margin-top: 75%;
+    }
+
+    .poster-info-text {
+        margin: 30px 4%;
+    }
+
+    .poster-info-text h2 {
+        font-size: 26pt;
+    }
+    
+    .poster-info-text p {
+        font-size: 15pt;
+        font-weight: bold;
+    }
+}
+
+.big-outer-triangle {
+    width: 0;
+    height: 0;
+    border-top: 76px solid transparent;
+    border-bottom: 75px solid transparent;
+    border-right: 76px solid rgba(255, 255, 255, 0.5);
+    position: absolute;
+    top: 25%;
+    margin-left: 46px;
+    margin-right: 46px;
+    z-index: 1;
+}
+
+.big-inner-triange {
+    position: relative;
+    top: -59px;
+    left: 12px;
+    width: 0;
+    height: 0;
+    border-top: 59px solid transparent;
+    border-bottom: 58px solid transparent;
+    border-right: 59px solid rgba(0, 0, 0, 1);
+    transition: 0.35s linear; 
+}
+
+.big-inner-triange:hover {
+    opacity: 0;
+    cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+    .big-outer-triangle {
+        top: 22.5%;
+    }
+}
+
+@media (max-width: 1200px) and (orientation: portrait) {
+    .big-outer-triangle {
+        top: 15%;
+    }
+    .big-inner-triange:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+    .big-inner-triange:active {
+        opacity: 0;
+        cursor: pointer;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .big-outer-triangle {
+        top: 40%;
+    }
+    .poster-info {
+        margin-top: 40%;
+    }
+    .big-inner-triange:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+    .big-inner-triange:active {
+        opacity: 0;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 650px) {
+    .big-outer-triangle {
+        margin-left: 16px;
+        margin-right: 16px;
+        top: 20%;
+        border-top: 49px solid transparent;
+        border-bottom: 48px solid transparent;
+        border-right: 49px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .big-inner-triange {
+        top: -39px;
+        left: 8px;
+        border-top: 39px solid transparent;
+        border-bottom: 40px solid transparent;
+        border-right: 39px solid rgba(0, 0, 0, 1);
+    }
+
+    .big-inner-triange:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+    .big-inner-triange:active {
+        opacity: 0;
+        cursor: pointer;
+    }
+}
+
+#triangleRightOuter1 {
+    position: absolute;
+    right: 0;
+    transform: rotate(180deg);
+}
