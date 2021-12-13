@@ -77,16 +77,19 @@
         </div>
         <div class="carousel-wrapper">
             <div class="film-carousel" id="carousel-1">
-                <div class="filmBlock">
-                    <figure>
-                        <figcaption>Джуді</figcaption>
-                        <div class="affiche">
-                            <a href="movies/judie-2019/index.html">
-                                <img src="movies/judie-2019/affiche.jpg" alt="Джуді">
-                            </a>
-                        </div>
-                    </figure>
-                </div>
+                @foreach (var film in Model.ComingSoon)
+                {
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>@film.Name</figcaption>
+                            <div class="affiche">
+                                <a asp-route-lang="@ViewBag.Lang" asp-controller="Movies" asp-action="Index" asp-route-id="@film.Id">
+                                    <img src="movies/@film.LinkToAffiche" alt="@film.Name">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                }
             </div>
         </div>
         <div class="triangleBlock">
@@ -114,16 +117,19 @@
         </div>
         <div class="carousel-wrapper">
             <div class="film-carousel" id="carousel-2">
-                <div class="filmBlock">
-                    <figure>
-                        <figcaption>Feeling through</figcaption>
-                        <div class="affiche">
-                            <a href="movies/feeling-through-2019/index.html">
-                                <img src="movies/feeling-through-2019/affiche.png" alt="Feeling through">
-                            </a>
-                        </div>
-                    </figure>
-                </div>
+                @foreach (var film in Model.Shorts)
+                {
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>@film.Name</figcaption>
+                            <div class="affiche">
+                                <a asp-route-lang="@ViewBag.Lang" asp-controller="Movies" asp-action="Index" asp-route-id="@film.Id">
+                                    <img src="movies/@film.LinkToAffiche" alt="@film.Name">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                }
             </div>
         </div>
         <div class="triangleBlock">
