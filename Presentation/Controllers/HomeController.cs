@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Presentation.Models;
 using System;
@@ -13,16 +14,51 @@ namespace Presentation.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IMovieService _movieService;
+
+        public HomeController(ILogger<HomeController> logger, IMovieService movieService)
         {
             _logger = logger;
+            _movieService = movieService;
         }
 
         [HttpGet]
-        public IActionResult Index(string lang)
+        public async Task<IActionResult> IndexAsync(string lang)
         {
             ViewBag.Lang = (lang is null) ? "ukr" : lang;
-            return View();
+            var posters = _movieService
+                .GetAll()
+                .Take(5)
+                .Select(m => new MovieReducedViewModel()
+                {
+                    Id = m.Id,
+                    LinkToAffiche = m.LinkToAffiche.Replace('\\', '/'),
+                    LinkToPoster = m.LinkToPoster.Replace('\\', '/'),
+                    Name = _movieService.GetNameForLang(m, lang) + " (" + m.Year + ")",
+                    Description = _movieService.GetDescriptionForLang(m, lang)
+                }
+                ).ToArray();
+            var comingSoon = (await _movieService.GetFeatureFilmsAsync())
+                .Select(m => new MovieCarouselViewModel() 
+                {
+                    Id = m.Id,
+                    LinkToAffiche = m.LinkToAffiche.Replace('\\', '/'),
+                    Name = _movieService.GetNameForLang(m, lang)
+                });
+            var shorts = (await _movieService.GetShortsAsync())
+                .Select(m => new MovieCarouselViewModel()
+                {
+                    Id = m.Id,
+                    LinkToAffiche = m.LinkToAffiche.Replace('\\', '/'),
+                    Name = _movieService.GetNameForLang(m, lang)
+                }); ;
+            var model = new MainPageViewModel()
+            {
+                Posters = posters,
+                ComingSoon = comingSoon,
+                Shorts = shorts
+            };
+            return View(model);
         }
 
         [Route("{controller}/InDevelopment")]

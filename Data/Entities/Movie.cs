@@ -22,6 +22,8 @@ namespace Data.Entities
 
         public short AgeRestriction { get; set; }
 
+        public short Year { get; set; }
+
         public string Description { get; set; }
 
         public string DescriptionRU { get; set; }

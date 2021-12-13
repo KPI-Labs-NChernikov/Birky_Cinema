@@ -51,11 +51,37 @@ namespace Business.Services
             return _mapper.Map<MovieModel>(model);
         }
 
+        public string GetDescriptionForLang(MovieModel model, string lang)
+        {
+            if (model is null)
+                throw new ArgumentNullException(nameof(model), "Model cannot be null");
+            var description = lang switch
+            {
+                "eng" => model.DescriptionENG,
+                "ru" => model.DescriptionRU,
+                _ => model.Description,
+            };
+            return description;
+        }
+
         public async Task<IEnumerable<MovieModel>> GetFeatureFilmsAsync()
         {
             return await Task.Run(() => _mapper.Map<IEnumerable<MovieModel>>(_context.Movies
                 .Where(m => m.Length >= 52)
                 .OrderByDescending(m => m.Id)));
+        }
+
+        public string GetNameForLang(MovieModel model, string lang)
+        {
+            if (model is null)
+                throw new ArgumentNullException(nameof(model), "Model cannot be null");
+            var name = lang switch
+            {
+                "eng" => model.NameENG,
+                "ru" => model.NameRU,
+                _ => model.Name,
+            };
+            return name;
         }
 
         public async Task<IEnumerable<MovieModel>> GetRecommendedAsync(string userId)

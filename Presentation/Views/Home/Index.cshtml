@@ -1,4 +1,6 @@
-﻿@{
+﻿@model MainPageViewModel
+
+@{
     var title = "Головна";
     if (ViewBag.Lang == "eng")
         title = "Main";
@@ -10,16 +12,20 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/mainstyle.css" />
     <style>
-        #poster-1 {
-            background-image: url("movies/breaking-bad-2008/poster.png");
-        }
-
-        @@media (max-width: 650px) {
-            #poster-1 {
-                background-image: url("movies/breaking-bad-2008/affiche.jpg");
+        @{
+            var styleSheet = "";
+            for (int i = 0; i < Model.Posters.Length; i++)
+            {
+                styleSheet += $"#poster-{i+1} {{ background-image: url(movies/{Model.Posters[i].LinkToPoster}); }}";
+                styleSheet += $"@media (max-width: 650px) {{ #poster-{i+1} {{ background-image: url(movies/{Model.Posters[i].LinkToAffiche}); }} }}";
             }
-        }
+         }
+        @styleSheet
     </style>
+}
+
+@section Scripts {
+    <script defer src="~/js/mainscript.js"></script>
 }
 
 <div id="triangleLeftOuter1" class="big-outer-triangle">
@@ -31,22 +37,39 @@
     </div>
 </div>
 <div class="posters">
-    <div class="poster active" id="poster-1">
-        <div class="poster-info">
-            <div class="poster-info-text">
-                <a href="movies/breaking-bad-2008/index.html"><h2>Пуститися берега (2008)</h2></a><br>
-                <p>
-                    Волтер Вайт (Браян Кренстон) працює вчителем хімії в середній школі, живе зі своєю дружиною Скайлер і сином Волтером молодшим,
-                    який хворий на дитячий параліч. Його життя сильно змінюється після того як у нього виявляють рак легень.
-                    Волтер вирішує зайнятися виробництвом наркотиків, для того щоб залишити достатній спадок своїй сім'ї.
-                    Він використовує свої знання для того щоб разом зі своїм колишнім учнем, Джессі Пінкманом, варити метамфетамін...
-                </p>
+    @for (int i = 0; i < Model.Posters.Length; i++)
+    {
+        var active = "";
+        if (i == 0)
+            active = "active";
+        var number = i + 1;
+        <div class="poster @active" id="poster-@number">
+            <div class="poster-info">
+                <div class="poster-info-text">
+                    <a asp-route-lang="@ViewBag.Lang" asp-controller="Movies" asp-action="Index" asp-route-id="@Model.Posters[i].Id"><h2>@Model.Posters[i].Name</h2></a><br>
+                    <p>
+                        @Model.Posters[i].Description
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
+    }
+
 </div>
 <div class="movies">
-    <br><br><h2>скоро в прокаті</h2>
+    <br><br>
+    @if (ViewBag.Lang == "eng")
+    {
+        <h2>coming soon</h2>
+    }
+    else if (ViewBag.Lang == "ru")
+    {
+        <h2>скоро в прокате</h2>
+    }
+    else
+    {
+        <h2>скоро в прокаті</h2>
+    }
     <div class="full-film-carousel">
         <div class="filler"></div>
         <div class="triangleBlock">
@@ -71,7 +94,19 @@
         </div>
         <div class="filler"></div>
     </div>
-    <br><br><h2>Короткометражні фільми</h2>
+    <br><br>
+    @if (ViewBag.Lang == "eng")
+    {
+        <h2>Shorts</h2>
+    }
+    else if (ViewBag.Lang == "ru")
+    {
+        <h2>Короткометражные фильмы</h2>
+    }
+    else
+    {
+        <h2>Короткометражні фільми</h2>
+    }
     <div class="full-film-carousel">
         <div class="filler"></div>
         <div class="triangleBlock">
@@ -97,7 +132,3 @@
         <div class="filler"></div>
     </div>
 </div>
-
-@section Scripts {
-    <script defer src="~/js/mainscript.js"></script>
-}

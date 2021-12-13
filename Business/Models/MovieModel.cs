@@ -34,6 +34,8 @@ namespace Business.Models
 
         public int CountryId { get; set; }
 
+        public short Year { get; set; }
+
 
         public ICollection<int> ReviewIds { get; set; }
 

@@ -16,5 +16,9 @@ namespace Business.Interfaces
         Task<IEnumerable<MovieModel>> GetRecommendedAsync(string userId);
 
         Task<IEnumerable<MovieModel>> GetSimilarAsync(int movieId);
+
+        string GetNameForLang(MovieModel model, string lang);
+
+        string GetDescriptionForLang(MovieModel model, string lang);
     }
 }

@@ -109,7 +109,7 @@ let shortsCarousel = {slider: $shortsSlider, elements: $shorts, arrowLeft: $shor
 
 let carousels = [newMoviesCarousel, shortsCarousel];
 
-$(function() {
+$(function () {
     changePosterOnInterval();
     addCarouselsListeners(carousels);
 });
