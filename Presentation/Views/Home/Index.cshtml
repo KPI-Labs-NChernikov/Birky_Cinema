@@ -9,14 +9,95 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/mainstyle.css" />
+    <style>
+        #poster-1 {
+            background-image: url("movies/breaking-bad-2008/poster.png");
+        }
+
+        @@media (max-width: 650px) {
+            #poster-1 {
+                background-image: url("movies/breaking-bad-2008/affiche.jpg");
+            }
+        }
+    </style>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>@ViewBag.Lang</p>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="triangleLeftOuter1" class="big-outer-triangle">
+    <div id="triangleLeft1" class="big-inner-triange" onclick="scrollPosterLeft()">
+    </div>
+</div>
+<div id="triangleRightOuter1" class="big-outer-triangle">
+    <div id="triangleRight1" class="big-inner-triange" onclick="scrollPosterRight()">
+    </div>
+</div>
+<div class="posters">
+    <div class="poster active" id="poster-1">
+        <div class="poster-info">
+            <div class="poster-info-text">
+                <a href="movies/breaking-bad-2008/index.html"><h2>Пуститися берега (2008)</h2></a><br>
+                <p>
+                    Волтер Вайт (Браян Кренстон) працює вчителем хімії в середній школі, живе зі своєю дружиною Скайлер і сином Волтером молодшим,
+                    який хворий на дитячий параліч. Його життя сильно змінюється після того як у нього виявляють рак легень.
+                    Волтер вирішує зайнятися виробництвом наркотиків, для того щоб залишити достатній спадок своїй сім'ї.
+                    Він використовує свої знання для того щоб разом зі своїм колишнім учнем, Джессі Пінкманом, варити метамфетамін...
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="movies">
+    <br><br><h2>скоро в прокаті</h2>
+    <div class="full-film-carousel">
+        <div class="filler"></div>
+        <div class="triangleBlock">
+            <div id="triangleLeft2" class="small-triangle disabled"></div>
+        </div>
+        <div class="carousel-wrapper">
+            <div class="film-carousel" id="carousel-1">
+                <div class="filmBlock">
+                    <figure>
+                        <figcaption>Джуді</figcaption>
+                        <div class="affiche">
+                            <a href="movies/judie-2019/index.html">
+                                <img src="movies/judie-2019/affiche.jpg" alt="Джуді">
+                            </a>
+                        </div>
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="triangleBlock">
+            <div id="triangleRight2" class="small-triangle"></div>
+        </div>
+        <div class="filler"></div>
+    </div>
+    <br><br><h2>Короткометражні фільми</h2>
+    <div class="full-film-carousel">
+        <div class="filler"></div>
+        <div class="triangleBlock">
+            <div id="triangleLeft3" class="small-triangle disabled"></div>
+        </div>
+        <div class="carousel-wrapper">
+            <div class="film-carousel" id="carousel-2">
+                <div class="filmBlock">
+                    <figure>
+                        <figcaption>Feeling through</figcaption>
+                        <div class="affiche">
+                            <a href="movies/feeling-through-2019/index.html">
+                                <img src="movies/feeling-through-2019/affiche.png" alt="Feeling through">
+                            </a>
+                        </div>
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="triangleBlock">
+            <div id="triangleRight3" class="small-triangle"></div>
+        </div>
+        <div class="filler"></div>
+    </div>
 </div>
 
 @section Scripts {
-    <link rel="stylesheet" type="text/css" href="~/css/mainstyle.css">
+    <script defer src="~/js/mainscript.js"></script>
 }

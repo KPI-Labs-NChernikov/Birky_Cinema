@@ -24,26 +24,6 @@ main {
     display: flex;
 }
 
-#poster-1 {
-    background-image: url("movies/breaking-bad-2008/poster.png");
-}
-
-#poster-2 {
-    background-image: url("movies/dark-waters-2009/poster.webp");
-}
-
-#poster-3 {
-    background-image: url("movies/the-big-short-2016/poster.jpg");
-}
-
-#poster-4 {
-    background-image: url("movies/revolutionary-road-2008/poster.jpg");
-}
-
-#poster-5 {
-    background-image: url("movies/the-children-act-2017/poster.jpg");
-}
-
 .poster-info {
     width: 100vw;
     min-height: 35%;
@@ -89,26 +69,6 @@ main {
 @media (max-width: 650px) {
     .poster {
         padding-top: 25px;
-    }
-
-    #poster-1 {
-        background-image: url("movies/breaking-bad-2008/affiche.jpg");
-    }
-
-    #poster-2 {
-        background-image: url("movies/dark-waters-2009/affiche.jpg");
-    }
-    
-    #poster-3 {
-        background-image: url("movies/the-big-short-2016/affiche.jpg");
-    }
-    
-    #poster-4 {
-        background-image: url("movies/revolutionary-road-2008/affiche.jpg");
-    }
-    
-    #poster-5 {
-        background-image: url("movies/the-children-act-2017/affiche.jpg");
     }
 
     .poster-info {

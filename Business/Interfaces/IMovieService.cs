@@ -11,6 +11,8 @@ namespace Business.Interfaces
     {
         Task<IEnumerable<MovieModel>> GetShortsAsync();
 
+        Task<IEnumerable<MovieModel>> GetFeatureFilmsAsync();
+
         Task<IEnumerable<MovieModel>> GetRecommendedAsync(string userId);
 
         Task<IEnumerable<MovieModel>> GetSimilarAsync(int movieId);

@@ -44,6 +44,10 @@ namespace Data
             .HasIndex(s => s.Name).IsUnique();
             builder.Entity<Genre>()
             .HasIndex(s => s.Name).IsUnique();
+            builder.Entity<Movie>()
+            .HasIndex(s => s.LinkToAffiche).IsUnique();
+            builder.Entity<Movie>()
+            .HasIndex(s => s.LinkToPoster).IsUnique();
         }
     }
 }

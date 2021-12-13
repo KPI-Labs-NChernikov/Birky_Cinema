@@ -51,6 +51,13 @@ namespace Business.Services
             return _mapper.Map<MovieModel>(model);
         }
 
+        public async Task<IEnumerable<MovieModel>> GetFeatureFilmsAsync()
+        {
+            return await Task.Run(() => _mapper.Map<IEnumerable<MovieModel>>(_context.Movies
+                .Where(m => m.Length >= 52)
+                .OrderByDescending(m => m.Id)));
+        }
+
         public async Task<IEnumerable<MovieModel>> GetRecommendedAsync(string userId)
         {
             var user = await _context.Users.Include(u => u.Genres).SingleOrDefaultAsync(u => u.Id == userId);
