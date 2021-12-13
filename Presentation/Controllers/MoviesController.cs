@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
-    public class MoviesController : Controller
+    public class MoviesController : BaseController
     {
         [Route("{controller}/{id}")]
         public async Task<IActionResult> Index(int id, string lang)
         {
-            ViewBag.Lang = (lang is null) ? "ukr" : lang;
+            AnalyzeLang(lang);
+            lang = ViewBag.Lang;
             return View();
         }
     }

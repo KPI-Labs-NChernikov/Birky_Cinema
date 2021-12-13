@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -25,7 +25,8 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync(string lang)
         {
-            ViewBag.Lang = (lang is null) ? "ukr" : lang;
+            AnalyzeLang(lang);
+            lang = ViewBag.Lang;
             var posters = _movieService
                 .GetAll()
                 .Take(5)
@@ -64,7 +65,7 @@ namespace Presentation.Controllers
         [Route("{controller}/InDevelopment")]
         public IActionResult InDevelopment(string lang)
         {
-            ViewBag.Lang = (lang is null) ? "ukr" : lang;
+            AnalyzeLang(lang);
             return View();
         }
 

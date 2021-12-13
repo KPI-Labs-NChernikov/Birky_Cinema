@@ -610,3 +610,21 @@ address {
     object-fit: cover;
     object-position: center center;
 }
+
+@media (max-width: 1200px) {
+    .languages {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+@media (max-width: 650px) {
+    .lower-block {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .languages {
+        justify-content: center;
+    }
+}
