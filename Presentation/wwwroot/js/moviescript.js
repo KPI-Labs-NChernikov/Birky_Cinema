@@ -12,3 +12,8 @@ let carousels = [recommended];
 $(function() {
     addCarouselsListeners(carousels);
 });
+
+var maxLength = 400;
+$('textarea').keyup(function() {
+  $('#rchars').text($(this).val().length + "/" + maxLength);
+});

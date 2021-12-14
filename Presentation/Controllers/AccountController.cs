@@ -185,5 +185,102 @@ namespace Presentation.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Update(string lang, UpdateViewModel model)
+        {
+            AnalyzeLang(lang);
+            lang = ViewBag.Lang;
+            model.AllGenres = _genreService.GetAll().Select(g => new GenreViewModel()
+            {
+                Id = g.Id,
+                Name = _genreService.GetNameForLang(g, lang)
+            });
+            var user = await _userManager.GetUserAsync(User);
+            model.FirstName = user.FirstName;
+            model.LastName = user.LastName;
+            model.Email = user.Email;
+            model.Genres = user.Genres.Select(g => g.Id);
+            model.PhoneNumber = user.PhoneNumber;
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateViewModel model)
+        {
+            AnalyzeLang(null);
+            var lang = ViewBag.Lang;
+            var user = await _userManager.GetUserAsync(User);
+            model.AllGenres = _genreService.GetAll().Select(g => new GenreViewModel()
+            {
+                Id = g.Id,
+                Name = _genreService.GetNameForLang(g, lang)
+            });
+            var emailChecker = new EmailAddressAttribute();
+            if (string.IsNullOrEmpty(model.Email) || !emailChecker.IsValid(model.Email))
+            {
+                ModelState.AddModelError("WrongEmail", "Not a valid or empty email");
+                return View(model);
+            }
+            if (string.IsNullOrEmpty(model.FirstName))
+            {
+                ModelState.AddModelError("NoFirstName", "First name cannot be empty");
+                return View(model);
+            }
+            if (string.IsNullOrEmpty(model.LastName))
+            {
+                ModelState.AddModelError("NoLastName", "Last name cannot be empty");
+                return View(model);
+            }
+            if (!(model.PhoneNumber is null) && model.PhoneNumber != user.PhoneNumber)
+            {
+                if (model.PhoneNumber.Length != 12 || !model.PhoneNumber.All(char.IsDigit)
+                || !model.PhoneNumber.StartsWith("38"))
+                    ModelState.AddModelError("WrongPhoneNumber", "Phone number is not in format 38XXXXXXXXXX");
+                else if (_userManager.Users.Select(u => u.PhoneNumber).Contains(model.PhoneNumber))
+                    ModelState.AddModelError("WrongPhoneNumber", $"Phone number {model.PhoneNumber} is already taken");
+                return View(model);
+            }
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+                user.Email = model.Email;
+                user.NormalizedEmail = model.Email.ToUpperInvariant();
+            user.UserName = model.Email;
+                user.NormalizedUserName = model.Email.ToUpperInvariant();
+                user.PhoneNumber = model.PhoneNumber;
+            var result = await _userManager.UpdateAsync(user);
+            
+            
+            if (result.Succeeded)
+            {
+                foreach (var oldGenre in user.Genres)
+                {
+                    try
+                    {
+                        await _genreService.DeleteUserFromGenreAsync(oldGenre.Id, user.Id);
+                    }
+                    catch (Exception) { }
+                }
+                GenreModel genre;
+                foreach (var genreId in model.Genres)
+                {
+                    genre = await _genreService.GetByIdAsync(genreId);
+                    try
+                    {
+                        await _genreService.AddUserToGenreAsync(genre, user.Id);
+                    }
+                    catch (Exception) { }
+                }
+                return RedirectToAction("Index", "Cabinet");
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError("UpdateError", error.Description);
+            }
+            return View(model);
+        }
     }
 }

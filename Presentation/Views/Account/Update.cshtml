@@ -1,0 +1,118 @@
+﻿@{
+    var title = "Оновлення";
+    if (ViewBag.Lang == "eng")
+        title = "Update";
+    else if (ViewBag.Lang == "ru")
+        title = "Обновление";
+    ViewData["Title"] = title;
+}
+
+@model UpdateViewModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/registrationstyle.css" />
+}
+
+@{
+    var format = "Формат";
+    var updBtnText = "Зберігти";
+    var cancelBtnText = "Скасувати";
+    @if (ViewBag.Lang == "eng")
+    {
+        format = "Format";
+        updBtnText = "Save";
+        cancelBtnText = "Cancel";
+    }
+    else if (ViewBag.Lang == "ru")
+    {
+        updBtnText = "Сохранить";
+        cancelBtnText = "Отменить";
+    }
+}
+<div class="center">
+    <form method="POST" id="form">
+        <h1>@title</h1>
+        @if (ViewBag.Lang == "eng")
+        {
+            <p>E-mail</p>
+        }
+        else if (ViewBag.Lang == "ru")
+        {
+            <p>Электронная почта</p>
+        }
+        else
+        {
+            <p>Електронна пошта</p>
+        }
+        <p class="error">@Html.ValidationMessage("WrongEmail")</p>
+        <input id="email" class="formInput  _req  _email" type="email" name="Email" required value="@Model.Email">
+        @if (ViewBag.Lang == "eng")
+        {
+            <p>Phone number</p>
+        }
+        else if (ViewBag.Lang == "ru")
+        {
+            <p>Номер телефона</p>
+        }
+        else
+        {
+            <p>Номер телефону</p>
+        }
+        <p class="error">@Html.ValidationMessage("WrongPhoneNumber")</p>
+        <input id="phone" class="formInput" type="tel" name="PhoneNumber" pattern="38[0-9]{10}" title="@format: 38XXXXXXXXXX"
+               value="@Model.PhoneNumber">
+        @if (ViewBag.Lang == "eng")
+        {
+            <p>First name</p>
+        }
+        else if (ViewBag.Lang == "ru")
+        {
+            <p>Имя</p>
+        }
+        else
+        {
+            <p>Ім'я</p>
+        }
+        <input id="firstName" class="formInput  _req" type="text" name="FirstName" required value="@Model.FirstName">
+        @if (ViewBag.Lang == "eng")
+        {
+            <p>Last name</p>
+        }
+        else if (ViewBag.Lang == "ru")
+        {
+            <p>Фамилия</p>
+        }
+        else
+        {
+            <p>Прізвище</p>
+        }
+        <input id="lastName" class="formInput  _req" type="text" name="LastName" required value="@Model.LastName">
+        @if (ViewBag.Lang == "eng")
+        {
+            <p>Favourite genres</p>
+        }
+        else if (ViewBag.Lang == "ru")
+        {
+            <p>Любимые жанры</p>
+        }
+        else
+        {
+            <p>Улюблені жанри</p>
+        }
+        <div class="genre-container">
+            @foreach (var genre in Model.AllGenres)
+            {
+                <label>
+                    @{
+                        var isChecked = !(Model.Genres is null) && @Model.Genres.Contains(genre.Id);
+                    }
+                    <input type="checkbox" name="Genres" value="@genre.Id" checked="@isChecked">
+                    @genre.Name
+                </label>
+            }
+        </div>
+        <p class="error">@Html.ValidationMessage("UpdateError")</p>
+        <button id="button" class="button" type="submit"> @updBtnText </button>
+    </form>
+    <a class="button" asp-area="" asp-controller="Cabinet" asp-action="Index">@cancelBtnText</a>
+</div>

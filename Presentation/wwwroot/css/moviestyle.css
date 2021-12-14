@@ -274,11 +274,19 @@
 }
 
 .review-header {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     gap: 15px;
     flex-wrap: wrap;
+}
+
+.left-info {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .review-star {
@@ -518,4 +526,26 @@
         margin-left: 0;
         margin-right: 0;
     }
+}
+
+.left-chars {
+    color: #CCCCCC;
+}
+
+.red-cross {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.rcbtn {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    background-color: #7B7A7A;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: center center;
 }
