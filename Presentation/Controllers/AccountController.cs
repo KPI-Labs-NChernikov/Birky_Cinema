@@ -250,9 +250,7 @@ namespace Presentation.Controllers
             user.UserName = model.Email;
                 user.NormalizedUserName = model.Email.ToUpperInvariant();
                 user.PhoneNumber = model.PhoneNumber;
-            var result = await _userManager.UpdateAsync(user);
-            
-            
+            var result = await _userManager.UpdateAsync(user); 
             if (result.Succeeded)
             {
                 foreach (var oldGenre in user.Genres)

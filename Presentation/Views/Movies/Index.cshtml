@@ -18,10 +18,81 @@
     <script defer src="~/js/moviescript.js"></script>
 }
 
+@{
+    string[] tableHeaders;
+    string[] newReviewControls;
+    string sessions;
+    string reviews;
+    string recommended;
+    if (ViewBag.Lang == "eng")
+    {
+        tableHeaders = new string[] {
+                        "genre:",
+                        "director:",
+                        "main-role actors:",
+                        "plot author:",
+                        "length:",
+                        "country:",
+                        "birky cinema's rating:"
+                    };
+        newReviewControls = new string[]
+        {
+            "Add your comment",
+            "characters",
+            "Send"
+        };
+        sessions = "choose a session";
+        reviews = "reviews";
+        recommended = "recommendations for you:";
+    }
+    else if (ViewBag.Lang == "ru")
+    {
+        tableHeaders = new string[] {
+                        "жанр:",
+                        "режиссер:",
+                        "в главных ролях:",
+                        "автор сценария:",
+                        "длительность:",
+                        "страна-производитель:",
+                        "рейтинг birky cinema:"
+                    };
+        newReviewControls = new string[]
+        {
+            "Добавьте свой комментарий",
+            "символов",
+            "Send"
+        };
+        sessions = "выберите сеанс";
+        reviews = "отзывы зрителей";
+        recommended = "вам также может понравиться:";
+    }
+    else
+    {
+        tableHeaders = new string[] {
+                        "жанр:",
+                        "режисер:",
+                        "в головних ролях:",
+                        "автор сценарію:",
+                        "тривалість:",
+                        "країна-виробник:",
+                        "рейтинг birky cinema:"
+                    };
+        newReviewControls = new string[]
+        {
+            "Додайте свій коментар",
+            "символів",
+            "Надіслати"
+        };
+        sessions = "оберіть сеанс";
+        reviews = "відгуки глядачів";
+        recommended = "вам також може сподобатись:";
+    }
+}
+
 <div class="poster-image">
     <div class="poster-fade">
         <div class="affiche-main">
-                <img src="../movies/it-2-2019/affiche.jpeg" alt="ВОНО 2 Афіша">
+            <img src="../movies/it-2-2019/affiche.jpeg" alt="ВОНО 2 Афіша">
         </div>
         <div class="movie-description">
             <h2>воно 2 (2019) <span class="age-restriction">18+</span></h2><br>
@@ -32,31 +103,31 @@
             </p><br>
             <table class="filmrate-table">
                 <tr>
-                    <td class="filmrate-left">жанр:</td>
+                    <td class="filmrate-left">@tableHeaders[0]</td>
                     <td>фільм жахів</td>
                 </tr>
                 <tr>
-                    <td class="filmrate-left">режисер:</td>
+                    <td class="filmrate-left">@tableHeaders[1]</td>
                     <td>андрес мускетті</td>
                 </tr>
                 <tr>
-                    <td class="filmrate-left">в головних ролях:</td>
+                    <td class="filmrate-left">@tableHeaders[2]</td>
                     <td>Джеймс Мак-Евой, Джессіка Честейн, Білл Гейдер</td>
                 </tr>
                 <tr>
-                    <td class="filmrate-left">автор сценарію:</td>
+                    <td class="filmrate-left">@tableHeaders[3]</td>
                     <td>стівен кінг, гері доберман</td>
                 </tr>
                 <tr>
-                    <td class="filmrate-left">тривалість:</td>
+                    <td class="filmrate-left">@tableHeaders[4]</td>
                     <td>169 хвилин</td>
                 </tr>
                 <tr>
-                    <td class="filmrate-left">країна-виробник:</td>
+                    <td class="filmrate-left">@tableHeaders[5]</td>
                     <td>США</td>
                 </tr>
                 <tr>
-                    <td class="filmrate-left">рейтинг birky cinema:</td>
+                    <td class="filmrate-left">@tableHeaders[6]</td>
                     <td>
                         <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="filmrate-star">
                         <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="filmrate-star">
@@ -70,7 +141,7 @@
     </div>
 </div>
 <div class="session-timetable">
-    <h2>оберіть сеанс</h2><br>
+    <h2>@sessions</h2><br>
     <form method="get" class="timetable">
         <div class="tt-row">
             <div class="tt-date">14.12.2021</div>
@@ -106,7 +177,7 @@
 </div>
 <div class="reviews-container">
     <div class="reviews">
-        <br><br><h2>відгуки глядачів</h2><br>
+        <br><br><h2>@reviews</h2><br>
         <div class="existing-reviews">
             <div class="review">
                 <div class="review-header">
@@ -172,7 +243,7 @@
                 <div class="megaphone">
                     <img src="~/icons/Megaphone.svg" alt="Рупор">
                 </div>
-                <textarea id="new-review-text" placeholder="Додайте свій коментар" autocomplete="off" maxlength="400"></textarea>
+                <textarea id="new-review-text" placeholder="@newReviewControls[0]" autocomplete="off" maxlength="400"></textarea>
             </div>
             <div class="lower-add-review">
                 <div class="rating-area">
@@ -186,16 +257,16 @@
                     <label for="star-2" title="Оцінка «2»"></label>
                     <input type="radio" id="star-1" name="rating" value="1" autocomplete="off">
                     <label for="star-1" title="Оцінка «1»"></label>
-                    <div><p class="left-chars"><span class="rchars" id="rchars">0/400</span> символів</p></div>
+                    <div><p class="left-chars"><span class="rchars" id="rchars">0/400</span> @newReviewControls[1]</p></div>
                 </div>
 
-                <button id="send-review-btn" type="submit">Надіслати</button>
+                <button id="send-review-btn" type="submit">@newReviewControls[2]</button>
             </div>
         </form>
     </div>
 </div>
 <div class="movies">
-    <br><br><h2>вам також може сподобатись:</h2>
+    <br><br><h2>@recommended</h2>
     <div class="full-film-carousel">
         <div class="filler"></div>
         <div class="triangleBlock">
