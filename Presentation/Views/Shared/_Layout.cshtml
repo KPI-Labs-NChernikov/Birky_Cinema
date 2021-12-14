@@ -193,45 +193,36 @@
                 }
                 <div class="lower-block">
                     <div class="buttons">
-                        @if (ViewBag.Lang == "eng")
-                        {
-                            <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-lang="eng">
-                                <div class="cabinet-button" id="login">
-                                    <p>Log in</p>
-                                </div>
-                            </a>
-                            <a asp-area="" asp-controller="Account" asp-action="Register" asp-route-lang="eng">
-                                <div class="cabinet-button" id="register">
-                                    <p>Register</p>
-                                </div>
-                            </a>
+                        @{
+                            var login = "Вхід";
+                            var logout = "Вихід";
+                            var changePswd = "Змінити пароль";
+                            var registration = "Регістрація";
+                            if (ViewBag.Lang == "eng")
+                            {
+                                login = "Log in";
+                                logout = "Log out";
+                                changePswd = "Change password";
+                                registration = "Registration";
+                            }
+                            else if (ViewBag.Lang == "ru")
+                            {
+                                login = "Вход";
+                                logout = "Выход";
+                                changePswd = "Сменить пароль";
+                                registration = "Регистрация";
+                            }
                         }
-                        else if (ViewBag.Lang == "ru")
-                        {
-                            <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-lang="ru">
+                            <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-lang="@ViewBag.Lang">
                                 <div class="cabinet-button" id="login">
-                                    <p>Вход</p>
+                                    <p>@login</p>
                                 </div>
                             </a>
-                            <a asp-area="" asp-controller="Account" asp-action="Register" asp-route-lang="ru">
+                            <a asp-area="" asp-controller="Account" asp-action="Register" asp-route-lang="@ViewBag.Lang">
                                 <div class="cabinet-button" id="register">
-                                    <p>Регистрация</p>
+                                    <p>@registration</p>
                                 </div>
                             </a>
-                        }
-                        else
-                        {
-                            <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-lang="ukr">
-                                <div class="cabinet-button" id="login">
-                                    <p>Вхід</p>
-                                </div>
-                            </a>
-                            <a asp-area="" asp-controller="Account" asp-action="Register" asp-route-lang="ukr">
-                                <div class="cabinet-button" id="register">
-                                    <p>Регістрація</p>
-                                </div>
-                            </a>
-                        }
                     </div>
                     <form class="languages" id="languages" method="GET">
                         @{bool isChecked = ViewBag.Lang == "ukr";}

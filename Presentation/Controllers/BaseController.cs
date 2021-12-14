@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         protected void AnalyzeLang(string lang)
         {
@@ -33,5 +34,9 @@ namespace Presentation.Controllers
             }
             ViewBag.Lang = lang;
         }
+
+        internal string UserId => !User.Identity.IsAuthenticated
+            ? null
+            : User.FindFirst(ClaimTypes.NameIdentifier).Value;
     }
 }

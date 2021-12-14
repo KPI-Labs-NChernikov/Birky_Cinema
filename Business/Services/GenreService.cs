@@ -61,8 +61,8 @@ namespace Business.Services
                 throw new ArgumentNullException(nameof(genre), "Model cannot be null");
             if (string.IsNullOrEmpty(genre.Name))
                 throw new ArgumentNullException(nameof(genre), "Model's name cannot be null or empty");
-            if (genre.MovieIds is null)
-                throw new ArgumentNullException(nameof(genre), "Model's Movie Ids cannot be null or empty");
+            if (genre.UserIds is null)
+                throw new ArgumentNullException(nameof(genre), "Model's User Ids cannot be null or empty");
             var existingModel = await _context.Genres
                 .Include(g => g.Movies)
                 .Include(g => g.Users)
@@ -133,6 +133,19 @@ namespace Business.Services
                 .Include(g => g.Movies)
                 .Include(g => g.Users)
                 .Where(r => r.Movies.Select(m => m.Id).Contains(movieId))));
+        }
+
+        public string GetNameForLang(GenreModel model, string lang)
+        {
+            if (model is null)
+                throw new ArgumentNullException(nameof(model), "Model cannot be null");
+            var name = lang switch
+            {
+                "eng" => model.NameENG,
+                "ru" => model.NameRU,
+                _ => model.Name,
+            };
+            return name;
         }
 
         public async Task<IEnumerable<GenreModel>> GetUserGenresAsync(string userId)

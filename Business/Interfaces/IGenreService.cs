@@ -21,5 +21,7 @@ namespace Business.Interfaces
         Task<IEnumerable<GenreModel>> GetMovieGenresAsync(int movieId);
 
         Task<IEnumerable<GenreModel>> GetUserGenresAsync(string userId);
+
+        string GetNameForLang(GenreModel model, string lang);
     }
 }

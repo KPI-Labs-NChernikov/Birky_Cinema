@@ -1,0 +1,129 @@
+﻿@{
+    var title = "Регістрація";
+    if (ViewBag.Lang == "eng")
+        title = "Registration";
+    else if (ViewBag.Lang == "ru")
+        title = "Регистрация";
+    ViewData["Title"] = title;
+}
+
+@model RegisterViewModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/registrationstyle.css" />
+}
+
+<div class="center">
+    <form method="POST" id="form">
+        <h1>@title</h1>
+        @if (ViewBag.Lang == "eng")
+        {
+            <p>E-mail*</p>
+        }
+        else if (ViewBag.Lang == "ru")
+        {
+            <p>Электронная почта*</p>
+        }
+        else
+        {
+            <p>Електронна пошта*</p>
+        }
+        <p class="error">@Html.ValidationMessage("WrongEmail")</p>
+        <input id="email" class="formInput  _req  _email" type="email" name="Email" required value="@Model.Email">
+        @if (ViewBag.Lang == "eng")
+        {
+            <p>Phone number</p>
+        }
+        else if (ViewBag.Lang == "ru")
+        {
+            <p>Номер телефона</p>
+        }
+        else
+        {
+            <p>Номер телефону</p>
+        }
+        @{
+            var format = "Формат";
+            var passwordTitle = "Повинен містити принаймні одну цифру та одну велику, та " +
+                "малу літеру та принаймні 8 або більше символів";
+            var regBtnText = "Зареєструватися";
+            @if (ViewBag.Lang == "eng")
+            {
+                format = "Format";
+                passwordTitle = "Must contain at least one number and one uppercase and lowercase letter, " +
+                    "and at least 8 or more characters";
+                regBtnText = "Register";
+            }
+            else if (ViewBag.Lang == "ru")
+            {
+                passwordTitle = "Должен содержать как минимум одну цифру, одну заглавную и строчную букву," +
+                    " и как минимум 8 или более символов.";
+                regBtnText = "Зарегистрироваться";
+            }
+        }
+        <input id="phone" class="formInput" type="tel" name="PhoneNumber" pattern="38[0-9]{10}" title="@format: 38XXXXXXXXXX"
+               value="@Model.PhoneNumber">
+        @if (ViewBag.Lang == "eng")
+        {
+            <p>First name*</p>
+        }
+        else if (ViewBag.Lang == "ru")
+        {
+            <p>Имя*</p>
+        }
+        else
+        {
+            <p>Ім'я*</p>
+        }
+        <input id="firstName" class="formInput  _req" type="text" name="FirstName" required value="@Model.FirstName">
+        @if (ViewBag.Lang == "eng")
+        {
+            <p>Last name*</p>
+        }
+        else if (ViewBag.Lang == "ru")
+        {
+            <p>Фамилия*</p>
+        }
+        else
+        {
+            <p>Прізвище*</p>
+        }
+        <input id="lastName" class="formInput  _req" type="text" name="LastName" required value="@Model.LastName">
+        @if (ViewBag.Lang == "eng")
+        {
+            <p>Favourite genres</p>
+        }
+        else if (ViewBag.Lang == "ru")
+        {
+            <p>Любимые жанры</p>
+        }
+        else
+        {
+            <p>Улюблені жанри</p>
+        }
+        <div class="genre-container">
+            @foreach (var genre in Model.AllGenres)
+            {
+                <label>
+                    @{
+                        var isChecked = !(Model.Genres is null) && @Model.Genres.Contains(genre.Id);
+                    }
+                    <input type="checkbox" name="Genres" value="@genre.Id" checked="@isChecked">
+                    @genre.Name
+                </label>
+            }
+        </div>
+        @if (ViewBag.Lang == "eng")
+        {
+            <p>Password*</p>
+        }
+        else
+        {
+            <p>Пароль*</p>
+        }
+        <input type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="formInput  _req"
+               title="@passwordTitle" required value="@Model.Password">
+        <p class="error">@Html.ValidationMessage("RegistrationError")</p>
+        <button id="button" class="button" type="submit"> @regBtnText </button>
+    </form>
+</div>
