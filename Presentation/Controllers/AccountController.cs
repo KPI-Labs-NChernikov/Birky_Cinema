@@ -282,5 +282,31 @@ namespace Presentation.Controllers
             }
             return View(model);
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult ChangePassword(string lang, ChangePasswordViewModel model)
+        {
+            AnalyzeLang(lang);
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            AnalyzeLang(null);
+            var lang = ViewBag.Lang;
+            var user = await _userManager.GetUserAsync(User);
+            var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.Password);
+            if (result.Succeeded)
+                return RedirectToAction("Index", "Cabinet");
+            else
+            {
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError("ChangePasswordError", error.Description);
+            }
+            return View(model);
+        }
     }
 }
