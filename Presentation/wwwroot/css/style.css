@@ -436,7 +436,6 @@ footer p a {
 }
 
 .cabinet-button {
-    max-width: fit-content;
     color: white !important;
     border: 1px solid #8a8a8a;
     border-radius: 5px;
@@ -444,6 +443,7 @@ footer p a {
     transition: 0.4s linear;
     display: flex;
     align-items: center;
+    width: max-content;
 }
 
 .cabinet-button:hover {

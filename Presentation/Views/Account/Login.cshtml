@@ -1,0 +1,42 @@
+﻿@{
+    var title = "Вхід";
+    if (ViewBag.Lang == "eng")
+        title = "Log in";
+    else if (ViewBag.Lang == "ru")
+        title = "Вход";
+    ViewData["Title"] = title;
+}
+
+@model LoginViewModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/loginstyle.css" />
+}
+
+<form method="POST" id="form" class="form">
+    <h1>@title</h1>
+    @if (ViewBag.Lang == "eng")
+    {
+        <p class="mainp">E-mail*</p>
+    }
+    else if (ViewBag.Lang == "ru")
+    {
+        <p class="mainp">Электронная почта*</p>
+    }
+    else
+    {
+        <p class="mainp">Електронна пошта*</p>
+    }
+    <input id="Email" class="formInput  _req  _email" type="email" name="Email" value="@Model.Email">
+    @if (ViewBag.Lang == "eng")
+    {
+        <p class="mainp">Password*</p>
+    }
+    else
+    {
+        <p class="mainp">Пароль*</p>
+    }
+    <input id="password" class="formInput _req" type="password" name="Password">
+    <p class="erroralert">@Html.ValidationMessage("LoginError")</p>
+    <button id="button" class="button" type="submit">@title</button>
+</form>

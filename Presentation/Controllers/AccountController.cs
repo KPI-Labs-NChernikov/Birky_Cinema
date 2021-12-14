@@ -30,8 +30,10 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Register(string lang, RegisterViewModel model)
+        public IActionResult Register(string lang, RegisterViewModel model)
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Cabinet", new { lang });
             AnalyzeLang(lang);
             lang = ViewBag.Lang;
             model.AllGenres = _genreService.GetAll().Select(g => new GenreViewModel()
@@ -45,6 +47,8 @@ namespace Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Cabinet");
             AnalyzeLang(null);
             var lang = ViewBag.Lang;
             model.AllGenres = _genreService.GetAll().Select(g => new GenreViewModel()
@@ -91,8 +95,6 @@ namespace Presentation.Controllers
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "Користувач");
-                WriteInfoToCookies("email", model.Email);
-                WriteInfoToCookies("password", model.Password);
                 var signInResult = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
                 if (signInResult.Succeeded)
                 {
@@ -119,6 +121,52 @@ namespace Presentation.Controllers
                 foreach (var error in result.Errors)
                     ModelState.AddModelError("RegistrationError", error.Description);
             }
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Login(string lang, LoginViewModel model)
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Cabinet", new { lang });
+            AnalyzeLang(lang);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Cabinet");
+            if (ModelState.IsValid)
+            {
+                var result =
+                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Cabinet");
+                }
+                else
+                {
+                    AnalyzeLang(null);
+                    var lang = ViewBag.Lang;
+                    string errorMessage;
+                    if (lang == "eng")
+                    {
+                        errorMessage = "E-mail or/and password are not correct";
+                    }
+                    else if (lang == "ru")
+                    {
+                        errorMessage = "Неправильная почта и/или пароль";
+                    }
+                    else
+                    {
+                        errorMessage = "Неправильна електронна пошта та/або пароль";
+                    }
+                    ModelState.AddModelError("LoginError", errorMessage);
+                }
+            }
+            model.Password = null;
             return View(model);
         }
     }

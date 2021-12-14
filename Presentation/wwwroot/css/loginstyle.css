@@ -1,0 +1,82 @@
+main
+{
+    padding-top: 125px;
+    background-color: #151515;
+}
+
+main h1{
+    color: #FFDD2F;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.form
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+main input
+{
+    outline: none;
+    width: 35%;
+    height: 30px;
+    display: block;
+}
+
+@media (max-width: 650px) {
+    main input
+{
+    outline: none;
+    width: 70%;
+    height: 30px;
+    display: block;
+}
+}
+
+.button
+{
+    width: 20%;
+    display: block;
+    background: #FFDD2F;
+    border-radius: 10px;
+    height: 50px;
+    font-weight: 800;
+    font-size: 23px;
+    margin-top: 10px;
+    text-transform: uppercase;
+    color: #000000;
+    cursor: pointer;
+}
+
+.button:hover
+{
+    box-shadow: #9e8a26 0px 0px 10px;
+}
+
+.mainp{
+    margin-top: 25px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+
+.formInput:focus
+{
+    box-shadow: #7b8372 0px 0px 10px;
+}
+
+.erroralert
+{
+    margin-top: 25px;
+    font-size: medium;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #836666;
+}

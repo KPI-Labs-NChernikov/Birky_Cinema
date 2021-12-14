@@ -37,27 +37,6 @@ namespace Presentation.Controllers
             ViewBag.Lang = lang;
         }
 
-        protected void WriteInfoToCookies(string key, string info)
-        {
-            if (Request.Cookies.ContainsKey(key))
-            {
-                if (info != Request.Cookies[key])
-                {
-                    Response.Cookies.Delete(key);
-                    Response.Cookies.Append(key, info, cookieOptions);
-                }
-            }
-            else
-            {
-                Response.Cookies.Append(key, info, cookieOptions);
-            }
-        }
-
-        protected string ReadInfoFromCookies(string key)
-        {
-            return Request.Cookies.ContainsKey(key) ? Request.Cookies[key] : null;
-        }
-
         internal string UserId => !User.Identity.IsAuthenticated
             ? null
             : User.FindFirst(ClaimTypes.NameIdentifier).Value;
