@@ -24,60 +24,54 @@
             <a asp-area="" asp-controller="Home" asp-action="Index" asp-route-lang="@ViewBag.Lang"><h1>birky cinema</h1></a>
         </div>
         <nav>
-            @if (ViewBag.Lang == "eng")
-            {
-                <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="eng">today in cinema</a>
-                </div>
-                <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="eng">discounts</a>
-                </div>
-                <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="eng">vacancies</a>
-                </div>
-                <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="eng">about us</a>
-                </div>
-                <div class="nav-item">
-                    <a asp-area="" asp-controller="Cabinet" asp-action="Index" asp-route-lang="eng">cabinet</a>
-                </div>
+            @{ 
+                string[] navs;
+                if (ViewBag.Lang == "eng")
+                {
+                    navs = new string[] {
+                        "today in cinema",
+                        "discounts",
+                        "vacancies",
+                        "about us",
+                        "cabinet"
+                    };
+                }
+                else if (ViewBag.Lang == "ru")
+                {
+                    navs = new string[] {
+                        "сейчас в кино",
+                        "акции",
+                        "вакансии",
+                        "про нас",
+                        "кабинет"
+                    };
+                }
+                else
+                {
+                    navs = new string[] {
+                        "зараз у кіно",
+                        "акції",
+                        "вакансії",
+                        "про нас",
+                        "кабінет"
+                    };
+                }
             }
-            else if (ViewBag.Lang == "ru")
-            {
                 <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="ru">сейчас в кино</a>
+                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="eng">@navs[0]</a>
                 </div>
                 <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="ru">акции</a>
+                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="eng">@navs[1]</a>
                 </div>
                 <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="ru">вакансии</a>
+                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="eng">@navs[2]</a>
                 </div>
                 <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="ru">про нас</a>
+                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="eng">@navs[3]</a>
                 </div>
                 <div class="nav-item">
-                    <a asp-area="" asp-controller="Cabinet" asp-action="Index" asp-route-lang="ru">кабинет</a>
+                    <a asp-area="" asp-controller="Cabinet" asp-action="Index" asp-route-lang="eng">@navs[4]</a>
                 </div>
-            }
-            else
-            {
-                <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="ukr">зараз у кіно</a>
-                </div>
-                <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="ukr">акції</a>
-                </div>
-                <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="ukr">вакансії</a>
-                </div>
-                <div class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="InDevelopment" asp-route-lang="ukr">про нас</a>
-                </div>
-                <div class="nav-item">
-                    <a asp-area="" asp-controller="Cabinet" asp-action="Index" asp-route-lang="ukr">кабінет</a>
-                </div>
-            }
         </nav>
     </header>
     <main>

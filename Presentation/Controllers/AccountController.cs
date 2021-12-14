@@ -45,30 +45,40 @@ namespace Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            AnalyzeLang(null);
+            var lang = ViewBag.Lang;
+            model.AllGenres = _genreService.GetAll().Select(g => new GenreViewModel()
+            {
+                Id = g.Id,
+                Name = _genreService.GetNameForLang(g, lang)
+            });
             var emailChecker = new EmailAddressAttribute();
             if (string.IsNullOrEmpty(model.Email) || !emailChecker.IsValid(model.Email))
             {
                 ModelState.AddModelError("WrongEmail", "Not a valid or empty email");
-                return RedirectToAction("Register", "Account", model);
+                return View(model);
             }
             if (string.IsNullOrEmpty(model.FirstName))
             {
                 ModelState.AddModelError("NoFirstName", "First name cannot be empty");
-                return RedirectToAction("Register", "Account", model);
+                return View(model);
             }
             if (string.IsNullOrEmpty(model.LastName))
             {
                 ModelState.AddModelError("NoLastName", "Last name cannot be empty");
-                return RedirectToAction("Register", "Account", model);
+                return View(model);
             }
-            if (!(model.PhoneNumber is null) && (model.PhoneNumber.Length != 12 || !model.PhoneNumber.All(char.IsDigit)
-                || !model.PhoneNumber.StartsWith("38")))
+            if (!(model.PhoneNumber is null))
             {
-                ModelState.AddModelError("WrongPhoneNumber", "Phone number is not in format 38XXXXXXXXXX");
-                return RedirectToAction("Register", "Account", model);
+                if (model.PhoneNumber.Length != 12 || !model.PhoneNumber.All(char.IsDigit)
+                || !model.PhoneNumber.StartsWith("38"))
+                    ModelState.AddModelError("WrongPhoneNumber", "Phone number is not in format 38XXXXXXXXXX");
+                else if (_userManager.Users.Select(u => u.PhoneNumber).Contains(model.PhoneNumber))
+                    ModelState.AddModelError("WrongPhoneNumber", $"Phone number {model.PhoneNumber} is already taken");
+                return View(model);
             }
-                var user = new User()
-                {
+            var user = new User()
+            {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
@@ -76,11 +86,13 @@ namespace Presentation.Controllers
                     UserName = model.Email,
                     NormalizedUserName = model.Email.ToUpperInvariant(),
                     PhoneNumber = model.PhoneNumber
-                };
-                var result = await _userManager.CreateAsync(user, model.Password);
+            };
+            var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                // To cookies!!!
+                await _userManager.AddToRoleAsync(user, "Користувач");
+                WriteInfoToCookies("email", model.Email);
+                WriteInfoToCookies("password", model.Password);
                 var signInResult = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
                 if (signInResult.Succeeded)
                 {
@@ -90,7 +102,7 @@ namespace Presentation.Controllers
                         genre = await _genreService.GetByIdAsync(genreId);
                         try
                         {
-                            await _genreService.AddUserToGenreAsync(genre, UserId);
+                            await _genreService.AddUserToGenreAsync(genre, user.Id);
                         }
                         catch (Exception) { }
                     }
@@ -107,7 +119,7 @@ namespace Presentation.Controllers
                 foreach (var error in result.Errors)
                     ModelState.AddModelError("RegistrationError", error.Description);
             }
-            return RedirectToAction("Register", "Account", model);
+            return View(model);
         }
     }
 }

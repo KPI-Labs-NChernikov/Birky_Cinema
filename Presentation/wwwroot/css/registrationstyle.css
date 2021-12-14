@@ -31,7 +31,7 @@ main h1{
     box-shadow: #9e8a26 0px 0px 10px;
 }
 
-p{
+main p{
     margin-top: 25px;
     margin-bottom: 5px;
     font-weight: bold;
@@ -78,7 +78,8 @@ p{
 }
 
 .error {
-    color: red; 
-    font-size: 10pt; 
+    margin-top: 5px;
+    color: red;
+    font-size: 10pt;
     font-weight: 400;
 }

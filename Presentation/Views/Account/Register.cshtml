@@ -61,6 +61,7 @@
                 regBtnText = "Зарегистрироваться";
             }
         }
+        <p class="error">@Html.ValidationMessage("WrongPhoneNumber")</p>
         <input id="phone" class="formInput" type="tel" name="PhoneNumber" pattern="38[0-9]{10}" title="@format: 38XXXXXXXXXX"
                value="@Model.PhoneNumber">
         @if (ViewBag.Lang == "eng")
