@@ -536,6 +536,8 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
+    object-fit: contain;
+    object-position: center center;
 }
 
 .rcbtn {
@@ -546,6 +548,5 @@
     border: none;
     outline: none;
     border-radius: 10px;
-    object-fit: cover;
-    object-position: center center;
+    overflow: hidden;
 }
