@@ -1,6 +1,7 @@
 ﻿using Business.Interfaces;
 using Business.Models;
 using Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -168,6 +169,21 @@ namespace Presentation.Controllers
             }
             model.Password = null;
             return View(model);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> LogoutConfirmed()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
     }
 }

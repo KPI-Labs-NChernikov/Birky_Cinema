@@ -1,0 +1,49 @@
+﻿@{
+    var title = "Вихід";
+    if (ViewBag.Lang == "eng")
+        title = "Log out";
+    else if (ViewBag.Lang == "ru")
+        title = "Выход";
+    ViewData["Title"] = title;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/loginstyle.css" />
+}
+
+@{
+    string y, n;
+    if (ViewBag.Lang == "eng")
+    {
+        y = "Yes";
+        n = "No";
+    }
+    else if (ViewBag.Lang == "ru")
+    {
+        y = "Да";
+        n = "Нет";
+    }
+    else
+    {
+        y = "Так";
+        n = "Ні";
+    }
+}
+
+<h1>@title</h1>
+<form method="POST" id="form" class="form" asp-controller="Account" asp-action="LogoutConfirmed">
+    @if (ViewBag.Lang == "eng")
+    {
+        <p class="mainp">Are you sure that you want to quit?</p>
+    }
+    else if (ViewBag.Lang == "ru")
+    {
+        <p class="mainp">Вы уверены, что вы хотите выйти?</p>
+    }
+    else
+    {
+        <p class="mainp">Ви впевнені, що ви хочете вийти?</p>
+    }
+    <button id="button" class="button" type="submit">@y</button>
+</form>
+<a class="button" asp-area="" asp-controller="Cabinet" asp-action="Index">@n</a>

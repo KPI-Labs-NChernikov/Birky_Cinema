@@ -190,23 +190,30 @@
                         @{
                             var login = "Вхід";
                             var logout = "Вихід";
-                            var changePswd = "Змінити пароль";
                             var registration = "Регістрація";
                             if (ViewBag.Lang == "eng")
                             {
                                 login = "Log in";
                                 logout = "Log out";
-                                changePswd = "Change password";
                                 registration = "Registration";
                             }
                             else if (ViewBag.Lang == "ru")
                             {
                                 login = "Вход";
                                 logout = "Выход";
-                                changePswd = "Сменить пароль";
                                 registration = "Регистрация";
                             }
                         }
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            <a asp-area="" asp-controller="Account" asp-action="Logout" asp-route-lang="@ViewBag.Lang">
+                                <div class="cabinet-button" id="logout">
+                                    <p>@logout</p>
+                                </div>
+                            </a>
+                        }
+                        else
+                        {
                             <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-lang="@ViewBag.Lang">
                                 <div class="cabinet-button" id="login">
                                     <p>@login</p>
@@ -217,6 +224,8 @@
                                     <p>@registration</p>
                                 </div>
                             </a>
+                        }
+
                     </div>
                     <form class="languages" id="languages" method="GET">
                         @{bool isChecked = ViewBag.Lang == "ukr";}

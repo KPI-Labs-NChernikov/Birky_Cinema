@@ -1,5 +1,8 @@
-main
-{
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     padding-top: 125px;
     background-color: #151515;
 }
@@ -38,8 +41,8 @@ main input
 }
 }
 
-.button
-{
+.button {
+    text-decoration: none;
     width: 20%;
     display: block;
     background: #FFDD2F;
@@ -51,6 +54,11 @@ main input
     text-transform: uppercase;
     color: #000000;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    margin-bottom: 10px;
 }
 
 .button:hover

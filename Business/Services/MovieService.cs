@@ -89,10 +89,11 @@ namespace Business.Services
             var user = await _context.Users.Include(u => u.Genres).SingleOrDefaultAsync(u => u.Id == userId);
             if (user is null)
                 return new List<MovieModel>();
-            return await Task.Run(() => _mapper.Map<IEnumerable<MovieModel>>(_context.Movies
-                .Include(m => m.Genres)
-                .Where(m => m.Genres.Intersect(user.Genres).Any())
-                .OrderByDescending(m => m.Id)));
+            var movies = _context.Movies
+                .Include(m => m.Genres).AsEnumerable();
+            movies = movies.Where(m => m.Genres.Intersect(user.Genres).Any())
+                .OrderByDescending(m => m.Id);
+            return await Task.Run(() => _mapper.Map<IEnumerable<MovieModel>>(movies));
         }
 
         public async Task<IEnumerable<MovieModel>> GetShortsAsync()

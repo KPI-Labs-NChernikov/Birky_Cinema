@@ -1,0 +1,127 @@
+﻿@{
+    var title = "Кабінет";
+    if (ViewBag.Lang == "eng")
+        title = "Cabinet";
+    else if (ViewBag.Lang == "ru")
+        title = "Кабинет";
+    ViewData["Title"] = title;
+}
+
+@model UserViewModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/cabinetstyle.css" />
+}
+
+<div class="main_inf">
+    <a asp-area="" asp-controller="Accout" asp-action="Update">
+        <div class="edit">
+            <img style="float: left;" src="~/icons/Brush.svg" alt="Brush">
+            @if (ViewBag.Lang == "eng")
+            {
+                <p class="edit-text">Edit profile</p>
+            }
+            else if (ViewBag.Lang == "ru")
+            {
+                <p class="edit-text">Редактировать профиль</p>
+            }
+            else
+            {
+                <p class="edit-text">Редагувати профіль</p>
+            }
+        </div>
+    </a>
+    <a asp-area="" asp-controller="Accout" asp-action="ChangePassword">
+        <div class="edit">
+            @if (ViewBag.Lang == "eng")
+            {
+                <p class="edit-text">Change password</p>
+            }
+            else if (ViewBag.Lang == "ru")
+            {
+                <p class="edit-text">Сменить пароль</p>
+            }
+            else
+            {
+                <p class="edit-text">Змінити пароль</p>
+            }
+        </div>
+    </a>
+    <img class="personCircle" src="~/icons/PersonCircle.svg" alt="PersonCircle">
+    <div class="name">
+        @Model.Name
+    </div>
+    <p class="mail">E-mail</p>
+    <p class="smallText">@Model.Email</p>
+    @if (ViewBag.Lang == "eng")
+    {
+        <p class="tel">Phone number</p>
+    }
+    else if (ViewBag.Lang == "ru")
+    {
+        <p class="tel">Номер телефона</p>
+    }
+    else
+    {
+        <p class="tel">Номер телефону</p>
+    }
+    <p class="smallText">@Model.PhoneNumber</p>
+    @if (ViewBag.Lang == "eng")
+    {
+        <p class="genres">Favourite genres</p>
+    }
+    else if (ViewBag.Lang == "ru")
+    {
+        <p class="genres">Любимые жанры</p>
+    }
+    else
+    {
+        <p class="genres">Улюблені жанри</p>
+    }
+    <p class="smallText">@Model.Genres</p>
+</div>
+<br />
+<br />
+<div class="movies">
+    @if (ViewBag.Lang == "eng")
+    {
+        <h2>Recommended</h2>
+    }
+    else if (ViewBag.Lang == "ru")
+    {
+        <h2>Рекомендованные</h2>
+    }
+    else
+    {
+        <h2>Рекомендовані</h2>
+    }
+    <div class="full-film-carousel">
+        <div class="filler"></div>
+        <div class="triangleBlock">
+            <div id="triangleLeft" class="small-triangle disabled"></div>
+        </div>
+        <div class="carousel-wrapper">
+            <div class="film-carousel" id="carousel-1">
+                @foreach (var film in Model.Recommended)
+                {
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>@film.Name</figcaption>
+                            <div class="affiche">
+                                <a asp-route-lang="@ViewBag.Lang" asp-controller="Movies" asp-action="Index" asp-route-id="@film.Id">
+                                    <img src="movies/@film.LinkToAffiche" alt="@film.Name">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="triangleBlock">
+            <div id="triangleRight" class="small-triangle"></div>
+        </div>
+        <div class="filler"></div>
+    </div>
+</div>
+<br>
+<br>

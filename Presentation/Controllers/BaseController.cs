@@ -10,7 +10,7 @@ namespace Presentation.Controllers
 {
     public abstract class BaseController : Controller
     {
-        private readonly CookieOptions cookieOptions = new CookieOptions()
+        private readonly CookieOptions cookieOptions = new()
         {
             MaxAge = new TimeSpan(182, 15, 0, 0)
         };
