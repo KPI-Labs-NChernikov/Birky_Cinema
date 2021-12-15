@@ -74,6 +74,14 @@ namespace Presentation.Controllers
                     "ru" => "минут",
                     _ => "хвилин",
                 };
+                var recommended = (await _movieService.GetSimilarAsync(movie.Id))
+                .Select(m => new MovieCarouselViewModel()
+                {
+                    Id = m.Id,
+                    LinkToAffiche = m.LinkToAffiche.Replace('\\', '/'),
+                    Name = _movieService.GetNameForLang(m, lang)
+                });
+                model.Recommended = recommended;
             }
             else
             {

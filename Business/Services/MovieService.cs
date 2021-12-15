@@ -108,10 +108,12 @@ namespace Business.Services
             var movie = await _context.Movies.Include(m => m.Genres).SingleOrDefaultAsync(m => m.Id == movieId);
             if (movie is null)
                 return new List<MovieModel>();
-            return await Task.Run(() => _mapper.Map<IEnumerable<MovieModel>>(_context.Movies
+            var movies = _context.Movies
                 .Include(m => m.Genres)
-                .Where(m => m.Genres.Intersect(movie.Genres).Any())
-                .OrderByDescending(m => m.Id)));
+                .AsEnumerable()
+                .Where(m => m.Id != movieId && m.Genres.Intersect(movie.Genres).Any())
+                .OrderByDescending(m => m.Id);
+            return await Task.Run(() => _mapper.Map<IEnumerable<MovieModel>>(movies));
         }
 
         public Task UpdateAsync(MovieModel model)
