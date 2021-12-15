@@ -33,6 +33,8 @@ namespace Presentation.Data
 
         public async Task LoginUserAsync(User user)
         {
+            if (!Directory.Exists(initialPath))
+                Directory.CreateDirectory(initialPath);
             var time = DateTime.Now;
             var timeString = GetTimeString(time);
             string path = GetPath(GetDateString(time));
@@ -50,6 +52,8 @@ namespace Presentation.Data
 
         public async Task RegisterUserAsync(User user)
         {
+            if (!Directory.Exists(initialPath))
+                Directory.CreateDirectory(initialPath);
             var time = DateTime.Now;
             var timeString = GetTimeString(time);
             string path = GetPath(GetDateString(time));
@@ -71,6 +75,8 @@ namespace Presentation.Data
 
         public async Task LogoutUserAsync(User user)
         {
+            if (!Directory.Exists(initialPath))
+                Directory.CreateDirectory(initialPath);
             var time = DateTime.Now;
             var timeString = GetTimeString(time);
             string path = GetPath(GetDateString(time));
