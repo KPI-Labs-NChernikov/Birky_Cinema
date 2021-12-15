@@ -254,6 +254,8 @@ else
                     </div>
                 </div>
             </div>
+            @if (Context.User.Identity.IsAuthenticated)
+            {
             <form method="post" class="add-review">
                 <div class="upper-add-review">
                     <div class="megaphone">
@@ -279,6 +281,7 @@ else
                     <button id="send-review-btn" type="submit">@newReviewControls[2]</button>
                 </div>
             </form>
+            }
         </div>
     </div>
     <div class="movies">
