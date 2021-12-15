@@ -77,10 +77,15 @@ namespace Presentation.Controllers
             {
                 if (model.PhoneNumber.Length != 12 || !model.PhoneNumber.All(char.IsDigit)
                 || !model.PhoneNumber.StartsWith("38"))
+                {
                     ModelState.AddModelError("WrongPhoneNumber", "Phone number is not in format 38XXXXXXXXXX");
+                    return View(model);
+                }
                 else if (_userManager.Users.Select(u => u.PhoneNumber).Contains(model.PhoneNumber))
+                {
                     ModelState.AddModelError("WrongPhoneNumber", $"Phone number {model.PhoneNumber} is already taken");
-                return View(model);
+                    return View(model);
+                }
             }
             var user = new User()
             {
@@ -238,10 +243,15 @@ namespace Presentation.Controllers
             {
                 if (model.PhoneNumber.Length != 12 || !model.PhoneNumber.All(char.IsDigit)
                 || !model.PhoneNumber.StartsWith("38"))
+                {
                     ModelState.AddModelError("WrongPhoneNumber", "Phone number is not in format 38XXXXXXXXXX");
+                    return View(model);
+                }
                 else if (_userManager.Users.Select(u => u.PhoneNumber).Contains(model.PhoneNumber))
+                {
                     ModelState.AddModelError("WrongPhoneNumber", $"Phone number {model.PhoneNumber} is already taken");
-                return View(model);
+                    return View(model);
+                }
             }
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;

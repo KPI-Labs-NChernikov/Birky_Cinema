@@ -123,7 +123,7 @@
             <p>Пароль*</p>
         }
         <input type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="formInput  _req"
-               title="@passwordTitle" required value="@Model.Password">
+               title="@passwordTitle" required>
         <p class="error">@Html.ValidationMessage("RegistrationError")</p>
         <button id="button" class="button" type="submit"> @regBtnText </button>
     </form>
