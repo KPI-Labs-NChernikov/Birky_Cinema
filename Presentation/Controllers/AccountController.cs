@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Presentation.Data;
 using Presentation.Models;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,14 @@ namespace Presentation.Controllers
 
         private readonly UserManager<User> _userManager;
 
-        public AccountController(IGenreService genreService, SignInManager<User> signInManager, UserManager<User> userManager)
+        private readonly CustomLogger _logger;
+
+        public AccountController(IGenreService genreService, SignInManager<User> signInManager, UserManager<User> userManager, CustomLogger logger)
         {
             _genreService = genreService;
             _signInManager = signInManager;
             _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -114,6 +118,7 @@ namespace Presentation.Controllers
                         }
                         catch (Exception) { }
                     }
+                    await _logger.RegisterUserAsync(user);
                     return RedirectToAction("Index", "Cabinet");
                 }
                 else
@@ -150,6 +155,8 @@ namespace Presentation.Controllers
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
                 if (result.Succeeded)
                 {
+                    var user = _userManager.Users.SingleOrDefault(u => u.Email == model.Email);
+                    await _logger.LoginUserAsync(user);
                     return RedirectToAction("Index", "Cabinet");
                 }
                 else
@@ -187,7 +194,9 @@ namespace Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> LogoutConfirmed()
         {
+            var user = await _userManager.GetUserAsync(User);
             await _signInManager.SignOutAsync();
+            await _logger.LogoutUserAsync(user);
             return RedirectToAction("Login", "Account");
         }
 

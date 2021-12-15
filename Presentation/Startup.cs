@@ -53,6 +53,7 @@ namespace Presentation
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<IScenarioWriterService, ScenarioWriterService>();
             services.AddScoped<ISessionService, SessionService>();
+            services.AddScoped<CustomLogger>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
