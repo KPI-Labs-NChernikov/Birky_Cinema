@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace Business.Services
 {
-    public class CountryService : ICountryService
+    public class SessionService : ISessionService
     {
         private readonly ApplicationContext _context;
 
         private readonly IMapper _mapper;
 
-        public CountryService(ApplicationContext context, IMapper mapper)
+        public SessionService(ApplicationContext context, IMapper mapper)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context), "Context cannot be null");
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper cannot be null");
         }
 
-        public Task AddAsync(CountryModel model)
+        public Task AddAsync(SessionModel model)
         {
             throw new NotImplementedException();
         }
@@ -33,31 +33,23 @@ namespace Business.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<CountryModel> GetAll()
+        public IEnumerable<SessionModel> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<CountryModel> GetByIdAsync(int id)
+        public Task<SessionModel> GetByIdAsync(int id)
         {
-            var model = await _context.Countries.Include(c => c.Movies).SingleOrDefaultAsync(c => c.Id == id);
-            return _mapper.Map<CountryModel>(model);
+            throw new NotImplementedException();
         }
 
-        public string GetNameForLang(CountryModel model, string lang)
+        public async Task<IEnumerable<SessionModel>> GetMovieSessionsAsync(int movieId)
         {
-            if (model is null)
-                throw new ArgumentNullException(nameof(model), "Model cannot be null");
-            var name = lang switch
-            {
-                "eng" => model.NameENG,
-                "ru" => model.NameRU,
-                _ => model.Name,
-            };
-            return name;
+            return await Task.Run(() => _mapper.Map<IEnumerable<SessionModel>>(_context.Sessions
+                .Where(s => s.MovieId == movieId).Include(s => s.SessionSeats)));
         }
 
-        public Task UpdateAsync(CountryModel model)
+        public Task UpdateAsync(SessionModel model)
         {
             throw new NotImplementedException();
         }

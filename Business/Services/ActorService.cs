@@ -52,6 +52,32 @@ namespace Business.Services
             throw new NotImplementedException();
         }
 
+        public string GetFirstNameForLang(ActorModel model, string lang)
+        {
+            if (model is null)
+                throw new ArgumentNullException(nameof(model), "Model cannot be null");
+            var name = lang switch
+            {
+                "eng" => model.FirstNameENG,
+                "ru" => model.FirstNameRU,
+                _ => model.FirstName,
+            };
+            return name;
+        }
+
+        public string GetLastNameForLang(ActorModel model, string lang)
+        {
+            if (model is null)
+                throw new ArgumentNullException(nameof(model), "Model cannot be null");
+            var name = lang switch
+            {
+                "eng" => model.LastNameENG,
+                "ru" => model.LastNameRU,
+                _ => model.LastName,
+            };
+            return name;
+        }
+
         public async Task<IEnumerable<ActorModel>> GetMovieActorsAsync(int movieId)
         {
             return await Task.Run(() => _mapper.Map<IEnumerable<ActorModel>>(_context.Actors

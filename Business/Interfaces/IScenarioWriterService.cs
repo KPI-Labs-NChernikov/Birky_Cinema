@@ -14,5 +14,9 @@ namespace Business.Interfaces
         Task DeleteMovieFromScenarioWriterAsync(int writerId, string userId);
 
         Task<IEnumerable<ScenarioWriterModel>> GetMovieScenarioWritersAsync(int movieId);
+
+        string GetFirstNameForLang(ScenarioWriterModel model, string lang);
+
+        string GetLastNameForLang(ScenarioWriterModel model, string lang);
     }
 }

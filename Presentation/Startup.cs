@@ -52,6 +52,7 @@ namespace Presentation
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<IScenarioWriterService, ScenarioWriterService>();
+            services.AddScoped<ISessionService, SessionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

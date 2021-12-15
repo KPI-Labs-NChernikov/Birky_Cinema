@@ -1,16 +1,24 @@
-﻿@@model MovieViewModel
+﻿@model MovieViewModel
 
 @{
-    ViewData["Title"] = "";
+    string title;
+    if (Model is null)
+        title = "Not found";
+    else
+        title = Model.Name;
+    ViewData["Title"] = title;
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/css/moviestyle.css" />
+@if (!(Model is null))
+{
     <style>
         .poster-image {
-            background-image: url(../movies/it-2-2019/poster.svg);
+            background-image: url(../movies/@Model.LinkToPoster);
         }
     </style>
+    }
 }
 
 @section Scripts {
@@ -18,7 +26,15 @@
     <script defer src="~/js/moviescript.js"></script>
 }
 
-@{
+@if (Model is null)
+{
+    <div class="under-construction">
+        <h2>@Html.ValidationMessage("MovieNotFoundError")</h2>
+    </div>
+}
+else
+{
+
     string[] tableHeaders;
     string[] newReviewControls;
     string sessions;
@@ -40,7 +56,7 @@
             "Add your comment",
             "characters",
             "Send"
-        };
+                            };
         sessions = "choose a session";
         reviews = "reviews";
         recommended = "recommendations for you:";
@@ -61,7 +77,7 @@
             "Добавьте свой комментарий",
             "символов",
             "Send"
-        };
+                            };
         sessions = "выберите сеанс";
         reviews = "отзывы зрителей";
         recommended = "вам также может понравиться:";
@@ -82,293 +98,295 @@
             "Додайте свій коментар",
             "символів",
             "Надіслати"
-        };
+                            };
         sessions = "оберіть сеанс";
         reviews = "відгуки глядачів";
         recommended = "вам також може сподобатись:";
     }
-}
 
-<div class="poster-image">
-    <div class="poster-fade">
-        <div class="affiche-main">
-            <img src="../movies/it-2-2019/affiche.jpeg" alt="ВОНО 2 Афіша">
-        </div>
-        <div class="movie-description">
-            <h2>воно 2 (2019) <span class="age-restriction">18+</span></h2><br>
-            <p>
-                Страшна істота — танцюючий клоун Пеннівайз родом із пекла — роками тероризує мешканців Деррі.
-                Протистояти йому наважуються тільки діти з Клубу невдах. Станеться щось страшне,
-                коли через 27 років пролунає дивний телефонний дзвінок… Адже Воно знову зголодніло.
-            </p><br>
-            <table class="filmrate-table">
-                <tr>
-                    <td class="filmrate-left">@tableHeaders[0]</td>
-                    <td>фільм жахів</td>
-                </tr>
-                <tr>
-                    <td class="filmrate-left">@tableHeaders[1]</td>
-                    <td>андрес мускетті</td>
-                </tr>
-                <tr>
-                    <td class="filmrate-left">@tableHeaders[2]</td>
-                    <td>Джеймс Мак-Евой, Джессіка Честейн, Білл Гейдер</td>
-                </tr>
-                <tr>
-                    <td class="filmrate-left">@tableHeaders[3]</td>
-                    <td>стівен кінг, гері доберман</td>
-                </tr>
-                <tr>
-                    <td class="filmrate-left">@tableHeaders[4]</td>
-                    <td>169 хвилин</td>
-                </tr>
-                <tr>
-                    <td class="filmrate-left">@tableHeaders[5]</td>
-                    <td>США</td>
-                </tr>
-                <tr>
-                    <td class="filmrate-left">@tableHeaders[6]</td>
-                    <td>
-                        <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="filmrate-star">
-                        <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="filmrate-star">
-                        <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="filmrate-star">
-                        <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="filmrate-star">
-                        <img src="~/icons/greystar.svg" alt="Сіра зірка" class="filmrate-star">
-                    </td>
-                </tr>
-            </table>
+    <div class="poster-image">
+        <div class="poster-fade">
+            <div class="affiche-main">
+                <img src="../movies/@Model.LinkToAffiche" alt="ВОНО 2 Афіша">
+            </div>
+            <div class="movie-description">
+                <h2>@Model.Name <span class="age-restriction">@Model.AgeRestriction</span></h2><br>
+                <p>
+                    @Model.Description
+                </p><br>
+                <table class="filmrate-table">
+                    <tr>
+                        <td class="filmrate-left">@tableHeaders[0]</td>
+                        <td>@Model.Genre</td>
+                    </tr>
+                    <tr>
+                        <td class="filmrate-left">@tableHeaders[1]</td>
+                        <td>@Model.Director</td>
+                    </tr>
+                    <tr>
+                        <td class="filmrate-left">@tableHeaders[2]</td>
+                        <td>@Model.Actors</td>
+                    </tr>
+                    <tr>
+                        <td class="filmrate-left">@tableHeaders[3]</td>
+                        <td>@Model.Authors</td>
+                    </tr>
+                    <tr>
+                        <td class="filmrate-left">@tableHeaders[4]</td>
+                        <td>@Model.Length</td>
+                    </tr>
+                    <tr>
+                        <td class="filmrate-left">@tableHeaders[5]</td>
+                        <td>@Model.Country</td>
+                    </tr>
+                    <tr>
+                        <td class="filmrate-left">@tableHeaders[6]</td>
+                        <td>
+                            @for (int i = 0; i < Model.Rating; i++)
+                            {
+                                <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="filmrate-star">
+                            }
+                            @for (int i = 0; i < 5 - Model.Rating; i++)
+                            {
+                                <img src="~/icons/greystar.svg" alt="Сіра зірка" class="filmrate-star">
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-</div>
-<div class="session-timetable">
-    <h2>@sessions</h2><br>
-    <form method="get" class="timetable">
-        <div class="tt-row">
-            <div class="tt-date">14.12.2021</div>
-            <div class="tt-times">
-                <button type="submit" name="btn_id" value="12:20">12:20</button>
-                <button type="submit" name="btn_id" value="15:20">15:20</button>
-                <button type="submit" name="btn_id" value="18:20">18:20</button>
-                <button type="submit" name="btn_id" value="21:20">21:20</button>
-                <button type="submit" name="btn_id" value="23:50">23:50</button>
-            </div>
-        </div>
-        <div class="tt-row">
-            <div class="tt-date">16.12.2021</div>
-            <div class="tt-times">
-                <button type="submit" name="btn_id" value="12:20">12:20</button>
-                <button type="submit" name="btn_id" value="15:20">15:20</button>
-                <button type="submit" name="btn_id" value="18:20">18:20</button>
-                <button type="submit" name="btn_id" value="21:20">21:20</button>
-                <button type="submit" name="btn_id" value="23:50">23:50</button>
-            </div>
-        </div>
-        <div class="tt-row">
-            <div class="tt-date">14.12.2021</div>
-            <div class="tt-times">
-                <button type="submit" name="btn_id" value="12:20">12:20</button>
-                <button type="submit" name="btn_id" value="15:20">15:20</button>
-                <button type="submit" name="btn_id" value="18:20">18:20</button>
-                <button type="submit" name="btn_id" value="21:20">21:20</button>
-                <button type="submit" name="btn_id" value="23:50">23:50</button>
-            </div>
-        </div>
-    </form>
-</div>
-<div class="reviews-container">
-    <div class="reviews">
-        <br><br><h2>@reviews</h2><br>
-        <div class="existing-reviews">
-            <div class="review">
-                <div class="review-header">
-                    <div class="left-info">
-                        <div class="review-userinfo">
-                            <div class="user-avatar">
-                                <img src="../../icons/PersonCircle.svg" alt="default avatar">
-                            </div>
-                            <h3>Світлана</h3>
-                        </div>
-                        <div class="review-rating">
-                            <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
-                            <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
-                            <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
-                            <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
-                            <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
-                        </div>
-                    </div>
-                    <form method="POST">
-                        <button class="rcbtn">
-                            <img class="red-cross" src="~/icons/redCross.svg" alt="red cross">
-                        </button>
-                    </form>
-                </div>
-                <div class="review-text">
-                    <p>
-                        Найкращий фільм жахів з тих, що я дивилася. Оригінальний сюжет та чудово підібрані актори
-                    </p>
+    <div class="session-timetable">
+        <h2>@sessions</h2><br>
+        <form method="get" class="timetable">
+            <div class="tt-row">
+                <div class="tt-date">14.12.2021</div>
+                <div class="tt-times">
+                    <button type="submit" name="btn_id" value="12:20">12:20</button>
+                    <button type="submit" name="btn_id" value="15:20">15:20</button>
+                    <button type="submit" name="btn_id" value="18:20">18:20</button>
+                    <button type="submit" name="btn_id" value="21:20">21:20</button>
+                    <button type="submit" name="btn_id" value="23:50">23:50</button>
                 </div>
             </div>
-            <div class="review">
-                <div class="review-header">
-                    <div class="left-info">
-                        <div class="review-userinfo">
-                            <div class="user-avatar">
-                                <img src="../../icons/PersonCircle.svg" alt="default avatar">
-                            </div>
-                            <h3>Віталій</h3>
-                        </div>
-                        <div class="review-rating">
-                            <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
-                            <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
-                            <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
-                            <img src="~/icons/greystar.svg" alt="Сіра зірка" class="review-star">
-                            <img src="~/icons/greystar.svg" alt="Сіра зірка" class="review-star">
-                        </div>
-                    </div>
-                    <form method="POST">
-                        <button class="rcbtn">
-                            <img class="red-cross" src="~/icons/redCross.svg" alt="red cross">
-                        </button>
-                    </form>
-                </div>
-                <div class="review-text">
-                    <p>
-                        Перша частина була значно краща. Сюжет досить дивний, зв’язок між першим та другим фільмом незрозумілий, враження не дуже
-                    </p>
+            <div class="tt-row">
+                <div class="tt-date">16.12.2021</div>
+                <div class="tt-times">
+                    <button type="submit" name="btn_id" value="12:20">12:20</button>
+                    <button type="submit" name="btn_id" value="15:20">15:20</button>
+                    <button type="submit" name="btn_id" value="18:20">18:20</button>
+                    <button type="submit" name="btn_id" value="21:20">21:20</button>
+                    <button type="submit" name="btn_id" value="23:50">23:50</button>
                 </div>
             </div>
-        </div>
-        <form method="post" class="add-review">
-            <div class="upper-add-review">
-                <div class="megaphone">
-                    <img src="~/icons/Megaphone.svg" alt="Рупор">
+            <div class="tt-row">
+                <div class="tt-date">14.12.2021</div>
+                <div class="tt-times">
+                    <button type="submit" name="btn_id" value="12:20">12:20</button>
+                    <button type="submit" name="btn_id" value="15:20">15:20</button>
+                    <button type="submit" name="btn_id" value="18:20">18:20</button>
+                    <button type="submit" name="btn_id" value="21:20">21:20</button>
+                    <button type="submit" name="btn_id" value="23:50">23:50</button>
                 </div>
-                <textarea id="new-review-text" placeholder="@newReviewControls[0]" autocomplete="off" maxlength="400"></textarea>
-            </div>
-            <div class="lower-add-review">
-                <div class="rating-area">
-                    <input type="radio" id="star-5" name="rating" value="5" autocomplete="off" required>
-                    <label for="star-5" title="Оцінка «5»"></label>
-                    <input type="radio" id="star-4" name="rating" value="4" autocomplete="off">
-                    <label for="star-4" title="Оцінка «4»"></label>
-                    <input type="radio" id="star-3" name="rating" value="3" autocomplete="off">
-                    <label for="star-3" title="Оцінка «3»"></label>
-                    <input type="radio" id="star-2" name="rating" value="2" autocomplete="off">
-                    <label for="star-2" title="Оцінка «2»"></label>
-                    <input type="radio" id="star-1" name="rating" value="1" autocomplete="off">
-                    <label for="star-1" title="Оцінка «1»"></label>
-                    <div><p class="left-chars"><span class="rchars" id="rchars">0/400</span> @newReviewControls[1]</p></div>
-                </div>
-
-                <button id="send-review-btn" type="submit">@newReviewControls[2]</button>
             </div>
         </form>
     </div>
-</div>
-<div class="movies">
-    <br><br><h2>@recommended</h2>
-    <div class="full-film-carousel">
-        <div class="filler"></div>
-        <div class="triangleBlock">
-            <div id="triangleLeft" class="small-triangle disabled"></div>
-        </div>
-        <div class="carousel-wrapper">
-            <div class="film-carousel" id="carousel">
-                <div class="filmBlock">
-                    <figure>
-                        <figcaption>Джуді</figcaption>
-                        <div class="affiche">
-                            <a href="../judie-2019/index.html">
-                                <img src="../judie-2019/affiche.jpg" alt="Джуді">
-                            </a>
+    <div class="reviews-container">
+        <div class="reviews">
+            <br><br><h2>@reviews</h2><br>
+            <div class="existing-reviews">
+                <div class="review">
+                    <div class="review-header">
+                        <div class="left-info">
+                            <div class="review-userinfo">
+                                <div class="user-avatar">
+                                    <img src="../../icons/PersonCircle.svg" alt="default avatar">
+                                </div>
+                                <h3>Світлана</h3>
+                            </div>
+                            <div class="review-rating">
+                                <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
+                                <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
+                                <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
+                                <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
+                                <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
+                            </div>
                         </div>
-                    </figure>
+                        <form method="POST">
+                            <button class="rcbtn">
+                                <img class="red-cross" src="~/icons/redCross.svg" alt="red cross">
+                            </button>
+                        </form>
+                    </div>
+                    <div class="review-text">
+                        <p>
+                            Найкращий фільм жахів з тих, що я дивилася. Оригінальний сюжет та чудово підібрані актори
+                        </p>
+                    </div>
                 </div>
-                <div class="filmBlock">
-                    <figure>
-                        <figcaption>Митниця дає добро</figcaption>
-                        <div class="affiche">
-                            <a href="../rien-a-declarer-2010/index.html">
-                                <img src="../rien-a-declarer-2010/affiche.jpg" alt="Митниця дає добро">
-                            </a>
+                <div class="review">
+                    <div class="review-header">
+                        <div class="left-info">
+                            <div class="review-userinfo">
+                                <div class="user-avatar">
+                                    <img src="../../icons/PersonCircle.svg" alt="default avatar">
+                                </div>
+                                <h3>Віталій</h3>
+                            </div>
+                            <div class="review-rating">
+                                <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
+                                <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
+                                <img src="~/icons/yellowstar.svg" alt="Жовта зірка" class="review-star">
+                                <img src="~/icons/greystar.svg" alt="Сіра зірка" class="review-star">
+                                <img src="~/icons/greystar.svg" alt="Сіра зірка" class="review-star">
+                            </div>
                         </div>
-                    </figure>
-                </div>
-                <div class="filmBlock">
-                    <figure>
-                        <figcaption>Таксі</figcaption>
-                        <div class="affiche">
-                            <a href="../taxi-1998/index.html">
-                                <img src="../taxi-1998/affiche.png" alt="Таксі">
-                            </a>
-                        </div>
-                    </figure>
-                </div>
-                <div class="filmBlock">
-                    <figure>
-                        <figcaption>Кімната листів</figcaption>
-                        <div class="affiche">
-                            <a href="../the-letter-room-2020/index.html">
-                                <img src="../the-letter-room-2020/affiche.jpg" alt="Кімната листів">
-                            </a>
-                        </div>
-                    </figure>
-                </div>
-                <div class="filmBlock">
-                    <figure>
-                        <figcaption>Вій</figcaption>
-                        <div class="affiche">
-                            <a href="../viy-2018/index.html">
-                                <img src="../viy-2018/affiche.jpg" alt="Вій">
-                            </a>
-                        </div>
-                    </figure>
-                </div>
-                <div class="filmBlock">
-                    <figure>
-                        <figcaption>50 відтінків сірого</figcaption>
-                        <div class="affiche">
-                            <a href="../fifty-shades-of-grey-2018/index.html">
-                                <img src="../fifty-shades-of-grey-2018/affiche.jpg" alt="50 відтінків сірого">
-                            </a>
-                        </div>
-                    </figure>
-                </div>
-                <div class="filmBlock">
-                    <figure>
-                        <figcaption>ДЕ ГРОШІ</figcaption>
-                        <div class="affiche">
-                            <a href="../where-is-the-money-2021/index.html">
-                                <img src="../where-is-the-money-2021/affiche.jpg" alt="ДЕ ГРОШІ">
-                            </a>
-                        </div>
-                    </figure>
-                </div>
-                <div class="filmBlock">
-                    <figure>
-                        <figcaption>Скажене весілля 3</figcaption>
-                        <div class="affiche">
-                            <a href="../crazy-wedding-3/index.html">
-                                <img src="../crazy-wedding-3/affiche.jpg" alt="Скажене весілля 3">
-                            </a>
-                        </div>
-                    </figure>
-                </div>
-                <div class="filmBlock">
-                    <figure>
-                        <figcaption>Захар Беркут</figcaption>
-                        <div class="affiche">
-                            <a href="../zakhar-berkut-2019/index.html">
-                                <img src="../zakhar-berkut-2019/affiche.jpg" alt="Захар Беркут">
-                            </a>
-                        </div>
-                    </figure>
+                        <form method="POST">
+                            <button class="rcbtn">
+                                <img class="red-cross" src="~/icons/redCross.svg" alt="red cross">
+                            </button>
+                        </form>
+                    </div>
+                    <div class="review-text">
+                        <p>
+                            Перша частина була значно краща. Сюжет досить дивний, зв’язок між першим та другим фільмом незрозумілий, враження не дуже
+                        </p>
+                    </div>
                 </div>
             </div>
+            <form method="post" class="add-review">
+                <div class="upper-add-review">
+                    <div class="megaphone">
+                        <img src="~/icons/Megaphone.svg" alt="Рупор">
+                    </div>
+                    <textarea name="Text" id="new-review-text" placeholder="@newReviewControls[0]" autocomplete="off" maxlength="400"></textarea>
+                </div>
+                <div class="lower-add-review">
+                    <div class="rating-area">
+                        <input type="radio" id="star-5" name="Rate" value="5" autocomplete="off" required>
+                        <label for="star-5" title="Оцінка «5»"></label>
+                        <input type="radio" id="star-4" name="Rate" value="4" autocomplete="off">
+                        <label for="star-4" title="Оцінка «4»"></label>
+                        <input type="radio" id="star-3" name="Rate" value="3" autocomplete="off">
+                        <label for="star-3" title="Оцінка «3»"></label>
+                        <input type="radio" id="star-2" name="Rate" value="2" autocomplete="off">
+                        <label for="star-2" title="Оцінка «2»"></label>
+                        <input type="radio" id="star-1" name="Rate" value="1" autocomplete="off">
+                        <label for="star-1" title="Оцінка «1»"></label>
+                        <div><p class="left-chars"><span class="rchars" id="rchars">0/400</span> @newReviewControls[1]</p></div>
+                    </div>
+
+                    <button id="send-review-btn" type="submit">@newReviewControls[2]</button>
+                </div>
+            </form>
         </div>
-        <div class="triangleBlock">
-            <div id="triangleRight" class="small-triangle"></div>
-        </div>
-        <div class="filler"></div>
     </div>
-</div>
+    <div class="movies">
+        <br><br><h2>@recommended</h2>
+        <div class="full-film-carousel">
+            <div class="filler"></div>
+            <div class="triangleBlock">
+                <div id="triangleLeft" class="small-triangle disabled"></div>
+            </div>
+            <div class="carousel-wrapper">
+                <div class="film-carousel" id="carousel">
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>Джуді</figcaption>
+                            <div class="affiche">
+                                <a href="../judie-2019/index.html">
+                                    <img src="../judie-2019/affiche.jpg" alt="Джуді">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>Митниця дає добро</figcaption>
+                            <div class="affiche">
+                                <a href="../rien-a-declarer-2010/index.html">
+                                    <img src="../rien-a-declarer-2010/affiche.jpg" alt="Митниця дає добро">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>Таксі</figcaption>
+                            <div class="affiche">
+                                <a href="../taxi-1998/index.html">
+                                    <img src="../taxi-1998/affiche.png" alt="Таксі">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>Кімната листів</figcaption>
+                            <div class="affiche">
+                                <a href="../the-letter-room-2020/index.html">
+                                    <img src="../the-letter-room-2020/affiche.jpg" alt="Кімната листів">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>Вій</figcaption>
+                            <div class="affiche">
+                                <a href="../viy-2018/index.html">
+                                    <img src="../viy-2018/affiche.jpg" alt="Вій">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>50 відтінків сірого</figcaption>
+                            <div class="affiche">
+                                <a href="../fifty-shades-of-grey-2018/index.html">
+                                    <img src="../fifty-shades-of-grey-2018/affiche.jpg" alt="50 відтінків сірого">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>ДЕ ГРОШІ</figcaption>
+                            <div class="affiche">
+                                <a href="../where-is-the-money-2021/index.html">
+                                    <img src="../where-is-the-money-2021/affiche.jpg" alt="ДЕ ГРОШІ">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>Скажене весілля 3</figcaption>
+                            <div class="affiche">
+                                <a href="../crazy-wedding-3/index.html">
+                                    <img src="../crazy-wedding-3/affiche.jpg" alt="Скажене весілля 3">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="filmBlock">
+                        <figure>
+                            <figcaption>Захар Беркут</figcaption>
+                            <div class="affiche">
+                                <a href="../zakhar-berkut-2019/index.html">
+                                    <img src="../zakhar-berkut-2019/affiche.jpg" alt="Захар Беркут">
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+            <div class="triangleBlock">
+                <div id="triangleRight" class="small-triangle"></div>
+            </div>
+            <div class="filler"></div>
+        </div>
+    </div>
+
+}

@@ -14,5 +14,9 @@ namespace Business.Interfaces
         Task DeleteMovieFromDirectorAsync(int directorId, string userId);
 
         Task<IEnumerable<DirectorModel>> GetMovieDirectorsAsync(int movieId);
+
+        string GetFirstNameForLang(DirectorModel model, string lang);
+
+        string GetLastNameForLang(DirectorModel model, string lang);
     }
 }

@@ -376,26 +376,26 @@
 	font-size: 32px;
 	line-height: 32px;
     margin-right: 5px;
-	background-image: url("icons/greystar.svg");
+	background-image: url("../icons/greystar.svg");
     background-size: cover;
 }
-.rating-area:not(:checked) > label:before {
-	background-image: url("icons/greystar.svg");
-}
-.rating-area > input:checked ~ label {
-	background-image: url("icons/yellowstar.svg");
-}
-.rating-area:not(:checked) > label:hover,
-.rating-area:not(:checked) > label:hover ~ label {
-	background-image: url("icons/yellowstar.svg");
-}
-.rating-area > input:checked + label:hover,
-.rating-area > input:checked + label:hover ~ label,
-.rating-area > input:checked ~ label:hover,
-.rating-area > input:checked ~ label:hover ~ label,
-.rating-area > label:hover ~ input:checked ~ label {
-	background-image: url("icons/yellowstar.svg");
-}
+    .rating-area:not(:checked) > label:before {
+        background-image: url("../icons/greystar.svg");
+    }
+    .rating-area > input:checked ~ label {
+        background-image: url("../icons/yellowstar.svg");
+    }
+    .rating-area:not(:checked) > label:hover,
+    .rating-area:not(:checked) > label:hover ~ label {
+        background-image: url("../icons/yellowstar.svg");
+    }
+    .rating-area > input:checked + label:hover,
+    .rating-area > input:checked + label:hover ~ label,
+    .rating-area > input:checked ~ label:hover,
+    .rating-area > input:checked ~ label:hover ~ label,
+    .rating-area > label:hover ~ input:checked ~ label {
+        background-image: url("../icons/yellowstar.svg");
+    }
 .rate-area > label:active {
 	position: relative;
 }

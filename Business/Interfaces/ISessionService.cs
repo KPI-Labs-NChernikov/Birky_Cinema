@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Business.Interfaces
 {
-    public interface ICountryService : ICRUD<CountryModel>
+    public interface ISessionService : ICRUD<SessionModel>
     {
-        string GetNameForLang(CountryModel model, string lang);
+        Task<IEnumerable<SessionModel>> GetMovieSessionsAsync(int movieId);
     }
 }
