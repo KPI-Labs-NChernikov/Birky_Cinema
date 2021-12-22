@@ -62,9 +62,9 @@ namespace Presentation.Controllers
                     AgeRestriction = movie.AgeRestriction + "+",
                     Rating = movie.Rating,
                     Genre = string.Join(", ", (await _genreService.GetMovieGenresAsync(movie.Id)).Select(m => _genreService.GetNameForLang(m, lang))),
-                    Actors = string.Join(", ", (await _actorService.GetMovieActorsAsync(movie.Id)).Select(m => _actorService.GetFirstNameForLang(m, lang) + _actorService.GetLastNameForLang(m, lang))),
-                    Authors = string.Join(", ", (await _scenarioWriterService.GetMovieScenarioWritersAsync(movie.Id)).Select(m => _scenarioWriterService.GetFirstNameForLang(m, lang) + _scenarioWriterService.GetLastNameForLang(m, lang))),
-                    Director = string.Join(", ", (await _directorService.GetMovieDirectorsAsync(movie.Id)).Select(m => _directorService.GetFirstNameForLang(m, lang) + _directorService.GetLastNameForLang(m, lang))),
+                    Actors = string.Join(", ", (await _actorService.GetMovieActorsAsync(movie.Id)).Select(m => _actorService.GetFirstNameForLang(m, lang) + " " + _actorService.GetLastNameForLang(m, lang))),
+                    Authors = string.Join(", ", (await _scenarioWriterService.GetMovieScenarioWritersAsync(movie.Id)).Select(m => _scenarioWriterService.GetFirstNameForLang(m, lang) + " " + _scenarioWriterService.GetLastNameForLang(m, lang))),
+                    Director = string.Join(", ", (await _directorService.GetMovieDirectorsAsync(movie.Id)).Select(m => _directorService.GetFirstNameForLang(m, lang) + " " + _directorService.GetLastNameForLang(m, lang))),
                     Country = _countryService.GetNameForLang((await _countryService.GetByIdAsync(movie.CountryId)), lang),
                     Length = movie.Length + " "
                 };
